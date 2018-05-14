@@ -26,7 +26,7 @@ namespace _4fitClub.Models
 
         public string Imagem { get; set; }
 
-        //FK para as Categorias
+        //FK para a tabela das Categorias
         [ForeignKey("Categoria")]
         public int CategoriaFK { get; set; }
         public virtual Categorias Categoria { get; set; }
