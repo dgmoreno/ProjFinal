@@ -23,6 +23,9 @@ namespace _4fitClub.Models
 
         public virtual DbSet<Planos> Planos { get; set; } //cria tabela Plano
 
+        public virtual DbSet<Imagens> Imagens { get; set; } //cria tabela Imagens
+
+
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

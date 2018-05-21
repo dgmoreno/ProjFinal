@@ -23,7 +23,7 @@ namespace _4fitClub.Migrations
 
             //******************************************************************************************
             //adiciona Categorias
-            var categorias = new List<Categorias> {
+            /*var categorias = new List<Categorias> {
                 new Categorias {ID=1, Nome="Cardio/Resistência", Descricao="Exercicios aeróbicos, com foco em resistência",
                 Imagem="Cardio.jpg"},
                 new Categorias {ID=2, Nome="Musculação", Descricao="Exercícios com foco na estrutura muscular",
@@ -51,7 +51,7 @@ namespace _4fitClub.Migrations
             var exercicios = new List<Exercicios> {
                 new Exercicios {ID=1, Nome="Flexão", Objetivo="Trabalhar a zona peitoral e triceps",
                 Passos="Coloque o corpo numa posição de prancha, alinhado e com braços e pernas estendidos. Flete apenas os braços, até tocar com o peito e a cintura no chão. Estenda de novo apenas os braços, até voltar à posição inicial.",
-                Imagem="Flexao.jpg", CategoriaFK=2},
+                , CategoriaFK=2},
                  new Exercicios {ID=2, Nome="Shadow Box", Objetivo="Resistência",
                 Passos="Faça movimentos de boxe no ar, pelo menos durante 30 segundos, e faça várias séries",
                 Imagem="ShadowBox.jpg", CategoriaFK=1},
@@ -69,7 +69,7 @@ namespace _4fitClub.Migrations
                 Imagem="Elevacao.jpg", CategoriaFK=5},
             };
             exercicios.ForEach(ee => context.Exercicios.AddOrUpdate(e => e.Nome, ee));
-            context.SaveChanges();
+            context.SaveChanges();*/
 
 
         }

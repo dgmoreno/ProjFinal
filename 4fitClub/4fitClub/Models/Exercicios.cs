@@ -13,6 +13,8 @@ namespace _4fitClub.Models
         public Exercicios()
         {
             ListaDePlanos = new HashSet<Planos>();
+
+            ListaDeImagens = new HashSet<Imagens>();
         }
 
         [Key]
@@ -24,7 +26,6 @@ namespace _4fitClub.Models
 
         public string Passos { get; set; }
 
-        public string Imagem { get; set; }
 
         //FK para a tabela das Categorias
         [ForeignKey("Categoria")]
@@ -33,6 +34,8 @@ namespace _4fitClub.Models
 
         //relação muitos para muitos com os diferentes Planos de treino
         public virtual ICollection<Planos> ListaDePlanos { get; set; }
+
+        public virtual ICollection<Imagens> ListaDeImagens { get; set; }
 
 
     }
