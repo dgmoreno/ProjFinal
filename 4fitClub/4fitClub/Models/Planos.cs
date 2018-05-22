@@ -23,5 +23,7 @@ namespace _4fitClub.Models
 
         // relacionamento muito para muitos com os exercicios
         public virtual ICollection<Exercicios> ListaDeExercicios { get; set; }
+        //associar a uma lista de utilizadores. Cada utilizador vai ter acesso
+        //aos seus planos
     }
 }

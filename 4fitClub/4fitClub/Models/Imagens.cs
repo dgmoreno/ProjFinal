@@ -13,6 +13,10 @@ namespace _4fitClub.Models
 
         public string Nome { get; set; }
 
+        public int Ordem { get; set; } //ordem de apresentação
+
+        public string Tipo { get; set; } // se é imagem ou vídeo
+
 
         //FK para a tabela dos Exercicios
         [ForeignKey("Exercicio")]

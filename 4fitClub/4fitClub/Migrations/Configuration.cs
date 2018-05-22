@@ -23,7 +23,7 @@ namespace _4fitClub.Migrations
 
             //******************************************************************************************
             //adiciona Categorias
-            /*var categorias = new List<Categorias> {
+            var categorias = new List<Categorias> {
                 new Categorias {ID=1, Nome="Cardio/Resistência", Descricao="Exercicios aeróbicos, com foco em resistência",
                 Imagem="Cardio.jpg"},
                 new Categorias {ID=2, Nome="Musculação", Descricao="Exercícios com foco na estrutura muscular",
@@ -38,6 +38,7 @@ namespace _4fitClub.Migrations
             categorias.ForEach(cc => context.Categorias.AddOrUpdate(c => c.Nome, cc));
             context.SaveChanges();
 
+
             //****************************************************************************************
             // adiciona Planos
             var planos = new List<Planos> {
@@ -51,25 +52,41 @@ namespace _4fitClub.Migrations
             var exercicios = new List<Exercicios> {
                 new Exercicios {ID=1, Nome="Flexão", Objetivo="Trabalhar a zona peitoral e triceps",
                 Passos="Coloque o corpo numa posição de prancha, alinhado e com braços e pernas estendidos. Flete apenas os braços, até tocar com o peito e a cintura no chão. Estenda de novo apenas os braços, até voltar à posição inicial.",
-                , CategoriaFK=2},
+                CategoriaFK=2},
                  new Exercicios {ID=2, Nome="Shadow Box", Objetivo="Resistência",
                 Passos="Faça movimentos de boxe no ar, pelo menos durante 30 segundos, e faça várias séries",
-                Imagem="ShadowBox.jpg", CategoriaFK=1},
+                CategoriaFK=1},
                 new Exercicios {ID=3, Nome="Agachamento", Objetivo="Foco nos musculos superiores das pernas",
                 Passos="Afastar os pés à largura dos ombros e apoiá-los totalmente no chão. Fletir os joelhos e baixar o corpo até ultrapassar o nível dos joelhos, mantendo sempre as costas direitas.Esticar as pernas para posição inicial.",
-                Imagem="Agachamento.jpg", CategoriaFK=2},
+                CategoriaFK=2},
                 new Exercicios {ID=4, Nome="Saltar à Corda ", Objetivo="Resistência e controlo da respiração",
                 Passos="Saltar a Corda, e aguentar o máximo possível",
-                Imagem="SCorda.jpg", CategoriaFK=1},
+                CategoriaFK=1},
                 new Exercicios {ID=5, Nome="Cobra Stretch", Objetivo="Treinar Flexibilidade e alongar",
                 Passos="Coloque o corpo virado de barriga para baixo, com as palmas das mãos no chão. Mantenha as pernas no chão e eleve o tronco até ao máximo que conseguir. Baixo o tronco de forma lenta, até regressar à posição inicial. Repitas os passos entre 30 segundos a 1 minuto",
-                Imagem="CStretch.jpg", CategoriaFK=3},
+                CategoriaFK=3},
                 new Exercicios {ID=6, Nome="Elevação", Objetivo="Exercicio de Calistenia, com foco no conjuto de músculos superior",
                 Passos="Pendurar numa barra com braços estendido. Elevar o corpo, com a força dos braços, até o queixo passar a barra",
-                Imagem="Elevacao.jpg", CategoriaFK=5},
+                CategoriaFK=5},
             };
             exercicios.ForEach(ee => context.Exercicios.AddOrUpdate(e => e.Nome, ee));
-            context.SaveChanges();*/
+            context.SaveChanges();
+
+            //**********************************************************************************************
+            //adicona Imagens
+
+            var imagens = new List<Imagens> {
+                new Imagens {ID=1, Nome="Flexao1.jpg", Ordem=1, Tipo="Imagem", ExercicioFK=1},
+                new Imagens {ID=2, Nome="Flexao2.jpg", Ordem=2, Tipo="Imagem", ExercicioFK=1},
+                new Imagens {ID=3, Nome="ShadowBox1.jpg", Ordem=1, Tipo="Imagem", ExercicioFK=2},
+                new Imagens {ID=4, Nome="ShadowBox2.jpg", Ordem=2, Tipo="Imagem", ExercicioFK=2},
+                new Imagens {ID=5, Nome="Agachamento1.jpg", Ordem=1, Tipo="Imagem", ExercicioFK=3},
+                new Imagens {ID=6, Nome="Agachamento2.jpg", Ordem=2, Tipo="Imagem", ExercicioFK=3},
+                new Imagens {ID=7, Nome="SaltoCorda1.jpg", Ordem=1, Tipo="Imagem", ExercicioFK=4},
+                new Imagens {ID=8, Nome="SaltoCorda2.jpg", Ordem=2, Tipo="Imagem", ExercicioFK=4},
+            };
+            imagens.ForEach(ii => context.Imagens.AddOrUpdate(i => i.Nome,ii));
+            context.SaveChanges();
 
 
         }
