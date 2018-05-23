@@ -1,0 +1,56 @@
+﻿@model _4fitClub.Models.Exercicios
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Exercicios</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Categoria.Nome)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Categoria.Nome)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Nome)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Nome)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Objetivo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Objetivo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Passos)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Passos)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
