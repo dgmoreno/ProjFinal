@@ -226,6 +226,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="imagens\Calistenia.png" />
+    <Content Include="imagens\Cardio.png" />
+    <Content Include="imagens\Equilibrio.png" />
+    <Content Include="imagens\Flexibilidade.png" />
+    <Content Include="imagens\Musculacao.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -286,16 +291,16 @@
     <Content Include="Views\Exercicios\Details.cshtml" />
     <Content Include="Views\Exercicios\Edit.cshtml" />
     <Content Include="Views\Exercicios\Index.cshtml" />
-    <Content Include="Views\Imagens\Create.cshtml" />
-    <Content Include="Views\Imagens\Delete.cshtml" />
-    <Content Include="Views\Imagens\Details.cshtml" />
-    <Content Include="Views\Imagens\Edit.cshtml" />
-    <Content Include="Views\Imagens\Index.cshtml" />
     <Content Include="Views\Planos\Create.cshtml" />
     <Content Include="Views\Planos\Delete.cshtml" />
     <Content Include="Views\Planos\Details.cshtml" />
     <Content Include="Views\Planos\Edit.cshtml" />
     <Content Include="Views\Planos\Index.cshtml" />
+    <Content Include="Views\Imagens\Create.cshtml" />
+    <Content Include="Views\Imagens\Delete.cshtml" />
+    <Content Include="Views\Imagens\Details.cshtml" />
+    <Content Include="Views\Imagens\Edit.cshtml" />
+    <Content Include="Views\Imagens\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="api\" />

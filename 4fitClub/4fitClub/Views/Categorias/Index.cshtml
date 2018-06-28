@@ -9,16 +9,18 @@
     <title>Index</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    <h3>
+        @Html.ActionLink("Adicionar Categoria", "Create")
+    </h3>
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                @Html.DisplayName("Categoria")
+                @*Html.DisplayNameFor(model => model.Nome)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Descricao)
+                @Html.DisplayName("Descrição")
+                @*Html.DisplayNameFor(model => model.Descricao)*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Imagem)
@@ -35,12 +37,15 @@
                 @Html.DisplayFor(modelItem => item.Descricao)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Imagem)
+                @*Html.DisplayFor(modelItem => item.Imagem)*@
+                <a href="~/imagens/@item.Imagem" target="_blank">
+                    <img src="~/imagens/@item.Imagem" width="50" height="50"/>
+                </a>
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+                @Html.ActionLink("Editar Categoria", "Edit", new { id=item.ID }) |
+                @Html.ActionLink("Detalhes da Categoria", "Details", new { id=item.ID }) |
+                @Html.ActionLink("Apagar Categoria", "Delete", new { id=item.ID })
             </td>
         </tr>
     }

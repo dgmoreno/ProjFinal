@@ -10,13 +10,14 @@
     <title>Delete</title>
 </head>
 <body>
-    <h3>Are you sure you want to delete this?</h3>
+    <h3>Tem a certeza que quer eliminar Categoria?</h3>
     <div>
         <h4>Categorias</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Nome)
+                @Html.DisplayName("Categoria")
+                @*Html.DisplayNameFor(model => model.Nome)*@
             </dt>
     
             <dd>
@@ -24,7 +25,8 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Descricao)
+                @Html.DisplayName("Descrição")
+                @*Html.DisplayNameFor(model => model.Descricao)*@
             </dt>
     
             <dd>
@@ -36,7 +38,10 @@
             </dt>
     
             <dd>
-                @Html.DisplayFor(model => model.Imagem)
+                @*Html.DisplayFor(model => model.Imagem)*@
+                <a href="~/imagens/@Model.Imagem" target="_blank">
+                    <img src="~/imagens/@Model.Imagem" width="50" height="50" />
+                </a>
             </dd>
     
         </dl>
@@ -45,8 +50,8 @@
             @Html.AntiForgeryToken()
     
             <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" /> |
-                @Html.ActionLink("Back to List", "Index")
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                @Html.ActionLink("Voltar atrás", "Index")
             </div>
         }
     </div>

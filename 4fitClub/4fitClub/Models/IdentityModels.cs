@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -7,6 +8,10 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace _4fitClub.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+    /// <summary>
+    /// classe para efetuar a gestão de utilizadores
+    /// </summary>
+
     public class ApplicationUser : IdentityUser
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -18,10 +23,16 @@ namespace _4fitClub.Models
         }
     }
 
+    /// <summary>
+    /// classe responsável pela criação da base de dados
+    ///     -da autenticação
+    ///     -do 'negócio'
+    /// </summary>
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("ExrecicioDBConnectionString", throwIfV1Schema: false)
         {
         }
 
@@ -29,5 +40,29 @@ namespace _4fitClub.Models
         {
             return new ApplicationDbContext();
         }
+
+
+        // vamos colocar, aqui, as instruções relativas às tabelas do 'negócio'
+        // descrever os nomes das tabelas na Base de Dados
+        public virtual DbSet<Exercicios> Exercicios { get; set; } //cria tabela Exercicio
+
+        public virtual DbSet<Categorias> Categorias { get; set; } //cria tabela Categoria
+
+        public virtual DbSet<Planos> Planos { get; set; } //cria tabela Plano
+
+        public virtual DbSet<Imagens> Imagens { get; set; } //cria tabela Imagens
+
+
+
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 }

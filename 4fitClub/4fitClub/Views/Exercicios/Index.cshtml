@@ -10,13 +10,14 @@
     <title>Index</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    <h3>
+        @Html.ActionLink("Adicionar Exercícios", "Create")
+    </h3>
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Categoria.Nome)
+                @Html.DisplayName("Categoria")
+                @*Html.DisplayNameFor(model => model.Categoria.Nome)*@ 
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
@@ -45,9 +46,9 @@
                 @Html.DisplayFor(modelItem => item.Passos)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+                @Html.ActionLink("Editar Exercício", "Edit", new { id=item.ID }) |
+                @Html.ActionLink("Detalhes do Exercício", "Details", new { id=item.ID }) |
+                @Html.ActionLink("Remover Exercício", "Delete", new { id=item.ID })
             </td>
         </tr>
     }

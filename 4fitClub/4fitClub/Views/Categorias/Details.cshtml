@@ -15,7 +15,8 @@
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Nome)
+                @Html.DisplayName("Categoria")
+                @*Html.DisplayNameFor(model => model.Nome)*@
             </dt>
     
             <dd>
@@ -23,7 +24,8 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Descricao)
+                @Html.DisplayName("Descrição")
+                @*Html.DisplayNameFor(model => model.Descricao)*@
             </dt>
     
             <dd>
@@ -35,14 +37,17 @@
             </dt>
     
             <dd>
-                @Html.DisplayFor(model => model.Imagem)
+                @*Html.DisplayFor(model => model.Imagem)*@
+                <a href="~/imagens/@Model.Imagem" target="_blank">
+                    <img src="~/imagens/@Model.Imagem" width="50" height="50"/>
+                </a>
             </dd>
     
         </dl>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Editar Categoria", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Voltar às Categorias", "Index")
     </p>
 </body>
 </html>

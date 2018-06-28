@@ -17,10 +17,13 @@ namespace _4fitClub.Models
         [Key]
         public int ID { get; set; } //Primary key
 
+        [Required]
         public string Nome { get; set; }
 
+        [Required]
         public string Descricao { get; set; }
 
+        [Required]
         public string Imagem { get; set; }
 
 

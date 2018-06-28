@@ -7,14 +7,14 @@ namespace _4fitClub.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<_4fitClub.Models.ExercicioDb>
+    internal sealed class Configuration : DbMigrationsConfiguration<_4fitClub.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(_4fitClub.Models.ExercicioDb context)
+        protected override void Seed(_4fitClub.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -25,15 +25,15 @@ namespace _4fitClub.Migrations
             //adiciona Categorias
             var categorias = new List<Categorias> {
                 new Categorias {ID=1, Nome="Cardio/Resistência", Descricao="Exercicios aeróbicos, com foco em resistência",
-                Imagem="Cardio.jpg"},
+                Imagem="Cardio.png"},
                 new Categorias {ID=2, Nome="Musculação", Descricao="Exercícios com foco na estrutura muscular",
-                Imagem="Musculacao.jpg"},
+                Imagem="Musculacao.png"},
                 new Categorias {ID=3, Nome="Flexibilidade", Descricao="Exercícios que ajudam a melhorar a flexibilidade",
-                Imagem="flexibilidade.jpg"},
+                Imagem="Flexibilidade.png"},
                 new Categorias {ID=4, Nome="Equilíbrio", Descricao="Exercícios para melhorar o equilibrio e a agilidade",
-                Imagem="Equilibrio.jpg"},
+                Imagem="Equilibrio.png"},
                 new Categorias {ID=5, Nome="Calístenia", Descricao="Exercícios que utilizam um grande conjuto de músculos do corpo",
-                Imagem="Calistenia.jpg"},
+                Imagem="Calistenia.png"},
             };
             categorias.ForEach(cc => context.Categorias.AddOrUpdate(c => c.Nome, cc));
             context.SaveChanges();
@@ -51,29 +51,37 @@ namespace _4fitClub.Migrations
             // adiciona Exercicios
             var exercicios = new List<Exercicios> {
                 new Exercicios {ID=1, Nome="Flexão", Objetivo="Trabalhar a zona peitoral e triceps",
-                Passos="Coloque o corpo numa posição de prancha, alinhado e com braços e pernas estendidos. Flete apenas os braços, até tocar com o peito e a cintura no chão. Estenda de novo apenas os braços, até voltar à posição inicial.",
+                Passos="1.Coloque o corpo numa posição de prancha, alinhado e com braços e pernas estendidos. " +
+                       "2.Flita apenas os braços, até tocar com o peito e a cintura no chão." +
+                       "3.Estenda de novo apenas os braços, até voltar à posição inicial.",
                 CategoriaFK=2},
                  new Exercicios {ID=2, Nome="Shadow Box", Objetivo="Resistência",
-                Passos="Faça movimentos de boxe no ar, pelo menos durante 30 segundos, e faça várias séries",
+                Passos="1.Faça movimentos de boxe no ar, pelo menos durante 30 segundos, e faça várias séries",
                 CategoriaFK=1},
                 new Exercicios {ID=3, Nome="Agachamento", Objetivo="Foco nos musculos superiores das pernas",
-                Passos="Afastar os pés à largura dos ombros e apoiá-los totalmente no chão. Fletir os joelhos e baixar o corpo até ultrapassar o nível dos joelhos, mantendo sempre as costas direitas.Esticar as pernas para posição inicial.",
+                Passos="1.Afaste os pés à largura dos ombros, apoiando totalmente no chão. " +
+                       "2.Fletir os joelhos e baixar o corpo até ultrapassar o nível dos joelhos, mantendo sempre as costas direitas." +
+                       "3.Estique as pernas para posição inicial.",
                 CategoriaFK=2},
                 new Exercicios {ID=4, Nome="Saltar à Corda ", Objetivo="Resistência e controlo da respiração",
-                Passos="Saltar a Corda, e aguentar o máximo possível",
+                Passos="1.Salte à Corda, e mantenha o ritmo durante 40 segundos",
                 CategoriaFK=1},
                 new Exercicios {ID=5, Nome="Cobra Stretch", Objetivo="Treinar Flexibilidade e alongar",
-                Passos="Coloque o corpo virado de barriga para baixo, com as palmas das mãos no chão. Mantenha as pernas no chão e eleve o tronco até ao máximo que conseguir. Baixo o tronco de forma lenta, até regressar à posição inicial. Repitas os passos entre 30 segundos a 1 minuto",
+                Passos="1.Coloque o corpo virado de barriga para baixo, com as palmas das mãos no chão." +
+                       "2.Mantenha as pernas no chão e eleve o tronco até ao máximo que conseguir. " +
+                       "3.Baixe o tronco de forma lenta, até regressar à posição inicial. " +
+                       "4.Repitas os passos entre 30 segundos a 1 minuto",
                 CategoriaFK=3},
                 new Exercicios {ID=6, Nome="Elevação", Objetivo="Exercicio de Calistenia, com foco no conjuto de músculos superior",
-                Passos="Pendurar numa barra com braços estendido. Elevar o corpo, com a força dos braços, até o queixo passar a barra",
+                Passos="1.Pendurar numa barra com braços estendido. " +
+                       "2.Elevar o corpo, com a força dos braços, até o queixo passar a barra",
                 CategoriaFK=5},
             };
             exercicios.ForEach(ee => context.Exercicios.AddOrUpdate(e => e.Nome, ee));
             context.SaveChanges();
 
             //**********************************************************************************************
-            //adicona Imagens
+            //adicona Imagens - alterar para multimédia (o nome da classe)
 
             var imagens = new List<Imagens> {
                 new Imagens {ID=1, Nome="Flexao1.jpg", Ordem=1, Tipo="Imagem", ExercicioFK=1},
