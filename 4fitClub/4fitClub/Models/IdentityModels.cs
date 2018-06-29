@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -52,7 +53,12 @@ namespace _4fitClub.Models
 
         public virtual DbSet<Imagens> Imagens { get; set; } //cria tabela Imagens
 
-
+        public int GetIDCategoria()
+        {
+            return this.Database
+                .SqlQuery<int>("Select Next Value For [dbo].[SeqIdCategoria]")
+                .Single();
+        }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

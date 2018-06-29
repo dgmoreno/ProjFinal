@@ -23,7 +23,7 @@ namespace _4fitClub.Models
         [Required]
         public string Descricao { get; set; }
 
-        [Required]
+        
         public string Imagem { get; set; }
 
 

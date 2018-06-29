@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using _4fitClub.Models;
+using _4fitClub.ViewModels;
 
 namespace _4fitClub.Controllers
 {
@@ -50,16 +52,47 @@ namespace _4fitClub.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nome,Descricao,Imagem")] Categorias categorias)
+        public ActionResult Create(CreateCategoriaViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Categorias.Add(categorias);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(model);
+
             }
 
-            return View(categorias);
+            var categoria = new Categorias
+            {
+                ID = db.GetIDCategoria(),
+                Nome = model.Nome,
+                Descricao = model.Descricao
+            };
+
+            string nomeImagem = "Categoria_" + categoria.ID + Path.GetExtension(model.Imagem.FileName);
+            // indica onde a imagem será guardada
+            string caminhoParaImagem = Path.Combine(Server.MapPath("~/imagens/"), nomeImagem);
+            //guarda o nome da imagem na BD
+            categoria.Imagem = nomeImagem;
+
+            try
+            {
+                // guardar a imagem no disco rígido
+                model.Imagem.SaveAs(caminhoParaImagem);
+                // adiciona na estrutura de dados, na memória do servidor,
+                // o objeto Categorias
+                db.Categorias.Add(categoria);
+                // faz 'commit' na BD
+                db.SaveChanges();
+
+                // redireciona o utilizador para a página de início
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                // gerar uma mensagem de erro para o utilizador
+                ModelState.AddModelError("", "Ocorreu um erro não determinado na criação da nova Categoria...");
+            }
+
+            return View(categoria);
         }
 
         // GET: Categorias/Edit/5
@@ -68,14 +101,25 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //Se Id==nulll retornar à página das categorias
+                return RedirectToAction("Index");
             }
             Categorias categorias = db.Categorias.Find(id);
             if (categorias == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return RedirectToAction("Index");
             }
-            return View(categorias);
+
+            var model = new EditCategoriaViewModel
+            {
+                ID = categorias.ID,
+                Descricao = categorias.Descricao,
+                ImagemAtual = categorias.Imagem
+            };
+
+            return View(model);
         }
 
         // POST: Categorias/Edit/5
@@ -83,15 +127,62 @@ namespace _4fitClub.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nome,Descricao,Imagem")] Categorias categorias)
+        public ActionResult Edit(EditCategoriaViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(categorias).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(model);
             }
-            return View(categorias);
+
+            var categoria = db.Categorias.Find(model.ID);
+
+            if(categoria == null)
+            {
+                ModelState.AddModelError("", "A categoria não existe");
+                return View(model);
+            }
+
+            string novoNome = "";
+            string nomeAntigo = "";
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if(model.Imagem != null)
+                    {
+                        nomeAntigo = categoria.Imagem;
+
+                        novoNome = "Categoria_" + categoria.ID + DateTime.Now.ToString("_yyyyMMdd_hhmmss") + Path.GetExtension(model.Imagem.FileName).ToLower();
+
+                        categoria.Imagem = novoNome;
+
+
+                        model.Imagem.SaveAs(Path.Combine(Server.MapPath("~/imagens/"), novoNome));
+                    }
+
+                    categoria.Descricao = model.Descricao;
+
+                    db.Entry(categoria).State = EntityState.Modified;
+
+                    db.SaveChanges();
+
+                    if (model.Imagem != null)
+                    {
+                        System.IO.File.Delete(Path.Combine(Server.MapPath("~/imagens/"), nomeAntigo));
+                    }
+
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    ModelState.AddModelError("", string.Format("Ocorreu um erro com a edição dos dados da categoria {0}", categoria.Nome));
+                }
+            }
+
+            model.ImagemAtual = categoria.Imagem;
+
+            return View(model);
         }
 
         // GET: Categorias/Delete/5

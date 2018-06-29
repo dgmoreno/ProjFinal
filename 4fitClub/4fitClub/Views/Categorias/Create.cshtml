@@ -1,8 +1,9 @@
-﻿@model _4fitClub.Models.Categorias
+﻿@model _4fitClub.ViewModels.CreateCategoriaViewModel
 
+@{
+    ViewBag.Title = "Categorias";
+}
 
-
-<!DOCTYPE html>
 
 <html>
 <head>
@@ -12,12 +13,18 @@
 <body>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
-    
-    
-    @using (Html.BeginForm()) 
+
+
+    @using (Html.BeginForm("Create",
+                      "Categorias",
+                      FormMethod.Post,
+                      new { enctype = "multipart/form-data" }))
     {
+
+
+
         @Html.AntiForgeryToken()
-        
+
         <div class="form-horizontal">
             <h4>Categorias</h4>
             <hr />
@@ -29,7 +36,7 @@
                     @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -37,15 +44,15 @@
                     @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Imagem, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Imagem, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Imagem, new { htmlAttributes = new { @class = "form-control-static", accept = "image/*" } })
                     @Html.ValidationMessageFor(model => model.Imagem, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Inserir" class="btn btn-success" />
@@ -53,7 +60,7 @@
             </div>
         </div>
     }
-    
+
     <div>
         @Html.ActionLink("Voltar atrás", "Index")
     </div>
