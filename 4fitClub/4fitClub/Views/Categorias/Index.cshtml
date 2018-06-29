@@ -9,9 +9,12 @@
     <title>Index</title>
 </head>
 <body>
-    <h3>
-        @Html.ActionLink("Adicionar Categoria", "Create")
-    </h3>
+    @if (User.IsInRole("Manager"))
+    {
+        <h3>
+            @Html.ActionLink("Adicionar Categoria", "Create")
+        </h3>
+    }
     <table class="table">
         <tr>
             <th>
@@ -27,29 +30,35 @@
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @*Html.DisplayFor(modelItem => item.Imagem)*@
-                <a href="~/imagens/@item.Imagem" target="_blank">
-                    <img src="~/imagens/@item.Imagem" width="50" height="50"/>
-                </a>
-            </td>
-            <td>
-                @Html.ActionLink("Editar Categoria", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Detalhes da Categoria", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Apagar Categoria", "Delete", new { id=item.ID })
-            </td>
-        </tr>
-    }
-    
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @*Html.DisplayFor(modelItem => item.Imagem)*@
+                    <a href="~/imagens/@item.Imagem" target="_blank">
+                        <img src="~/imagens/@item.Imagem" width="50" height="50" />
+                    </a>
+                </td>
+                <td>
+                    @if (User.IsInRole("Manager"))
+                    {
+                        <text>
+                            @Html.ActionLink("Editar Categoria", "Edit", new { id = item.ID }) |
+                            @Html.ActionLink("Apagar Categoria", "Delete", new { id = item.ID })
+                        </text>
+                    }
+                    @Html.ActionLink("Detalhes da Categoria", "Details", new { id = item.ID }) 
+                </td>
+            </tr>
+        }
+
     </table>
 </body>
 </html>

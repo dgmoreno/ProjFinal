@@ -10,14 +10,17 @@
     <title>Index</title>
 </head>
 <body>
-    <h3>
-        @Html.ActionLink("Adicionar Exercícios", "Create")
-    </h3>
+    @if (User.IsInRole("Manager"))
+    {
+        <h3>
+            @Html.ActionLink("Adicionar Exercícios", "Create")
+        </h3>
+    }
     <table class="table">
         <tr>
             <th>
                 @Html.DisplayName("Categoria")
-                @*Html.DisplayNameFor(model => model.Categoria.Nome)*@ 
+                @*Html.DisplayNameFor(model => model.Categoria.Nome)*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
@@ -30,29 +33,35 @@
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categoria.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Objetivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Passos)
-            </td>
-            <td>
-                @Html.ActionLink("Editar Exercício", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Detalhes do Exercício", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Remover Exercício", "Delete", new { id=item.ID })
-            </td>
-        </tr>
-    }
-    
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Objetivo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Passos)
+                </td>
+                <td>
+                    @if (User.IsInRole("Manager"))
+                    {
+                        <text>
+                            @Html.ActionLink("Editar Exercício", "Edit", new { id = item.ID }) |
+                            @Html.ActionLink("Remover Exercício", "Delete", new { id = item.ID }) |
+                        </text>
+                    }
+                    @Html.ActionLink("Detalhes do Exercício", "Details", new { id = item.ID }) 
+                </td>
+            </tr>
+        }
+
     </table>
 </body>
 </html>

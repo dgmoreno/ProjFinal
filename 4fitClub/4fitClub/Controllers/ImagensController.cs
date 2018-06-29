@@ -10,6 +10,7 @@ using _4fitClub.Models;
 
 namespace _4fitClub.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class ImagensController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
