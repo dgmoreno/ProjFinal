@@ -10,17 +10,20 @@ using _4fitClub.Models;
 
 namespace _4fitClub.Controllers
 {
+    [Authorize(Roles = "Manager,Utilizador")]
     public class CategoriasController : Controller
     {
-        private ExercicioDb db = new ExercicioDb();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Categorias
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View(db.Categorias.ToList());
         }
 
         // GET: Categorias/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +39,7 @@ namespace _4fitClub.Controllers
         }
 
         // GET: Categorias/Create
+        [Authorize(Roles = "Manager")]
         public ActionResult Create()
         {
             return View();
@@ -59,6 +63,7 @@ namespace _4fitClub.Controllers
         }
 
         // GET: Categorias/Edit/5
+        [Authorize(Roles = "Manager")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -90,6 +95,7 @@ namespace _4fitClub.Controllers
         }
 
         // GET: Categorias/Delete/5
+        [Authorize(Roles = "Manager")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -12,7 +12,7 @@ namespace _4fitClub.Controllers
 {
     public class ImagensController : Controller
     {
-        private ExercicioDb db = new ExercicioDb();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Imagens
         public ActionResult Index()

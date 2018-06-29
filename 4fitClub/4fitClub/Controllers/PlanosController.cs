@@ -10,9 +10,10 @@ using _4fitClub.Models;
 
 namespace _4fitClub.Controllers
 {
+    [Authorize(Roles = "Manager,Utilizador")]
     public class PlanosController : Controller
     {
-        private ExercicioDb db = new ExercicioDb();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Planos
         public ActionResult Index()

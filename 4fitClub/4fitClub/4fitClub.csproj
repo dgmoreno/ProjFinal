@@ -209,7 +209,6 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Categorias.cs" />
     <Compile Include="Models\Exercicios.cs" />
-    <Compile Include="Models\ExercicioDb.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Imagens.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
