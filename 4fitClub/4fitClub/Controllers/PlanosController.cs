@@ -22,7 +22,7 @@ namespace _4fitClub.Controllers
                             .Where(p => p.UserName.Equals(User.Identity.Name))
                             .Include(p => p.ListaDeExercicios);
             
-                
+               
                 
             return View(planos.ToList());
         }
@@ -57,8 +57,11 @@ namespace _4fitClub.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Nome,Descricao")] Planos planos)
         {
+            planos.UserName = User.Identity.Name;
+
             if (ModelState.IsValid)
             {
+                
                 db.Planos.Add(planos);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -89,6 +92,8 @@ namespace _4fitClub.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Nome,Descricao")] Planos planos)
         {
+            planos.UserName = User.Identity.Name;
+
             if (ModelState.IsValid)
             {
                 db.Entry(planos).State = EntityState.Modified;
