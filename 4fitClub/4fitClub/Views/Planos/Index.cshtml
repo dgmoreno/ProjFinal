@@ -11,7 +11,7 @@
 </head>
 <body>
     <h3>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Criar Novo Plano de Treino", "Create")
     </h3>
     <table class="table">
         <tr>
@@ -33,9 +33,9 @@
                 @Html.DisplayFor(modelItem => item.Descricao)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+                @Html.ActionLink("Editar Plano de Treino", "Edit", new { id=item.ID }) |
+                @Html.ActionLink("Detalhes do Plano de Treino", "Details", new { id=item.ID }) |
+                @Html.ActionLink("Eliminar Plano de Treino", "Delete", new { id=item.ID })
             </td>
         </tr>
     }

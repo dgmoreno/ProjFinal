@@ -25,5 +25,10 @@ namespace _4fitClub.Models
         public virtual ICollection<Exercicios> ListaDeExercicios { get; set; }
         //associar a uma lista de utilizadores. Cada utilizador vai ter acesso
         //aos seus planos
+
+        //*************************************************************
+        // nome do login (UserName) utilizado para identificar os Planos do utilizador
+        // na prática, é uma FK para a tabela dos utilizadores AspNetUsers
+        public string UserName { get; set; }
     }
 }

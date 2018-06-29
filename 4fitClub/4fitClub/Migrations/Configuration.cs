@@ -33,18 +33,9 @@ namespace _4fitClub.Migrations
                 new Categorias {ID=4, Nome="Equilíbrio", Descricao="Exercícios para melhorar o equilibrio e a agilidade",
                 Imagem="Equilibrio.png"},
                 new Categorias {ID=5, Nome="Calístenia", Descricao="Exercícios que utilizam um grande conjuto de músculos do corpo",
-                Imagem="Calistenia.png"},
+                Imagem="Calistenia.png"}
             };
             categorias.ForEach(cc => context.Categorias.AddOrUpdate(c => c.Nome, cc));
-            context.SaveChanges();
-
-
-            //****************************************************************************************
-            // adiciona Planos
-            var planos = new List<Planos> {
-                new Planos {ID=1, Nome="Projeto Verão", Descricao="É desta que fico Fit"},
-            };
-            planos.ForEach(pp => context.Planos.AddOrUpdate(p => p.Nome, pp));
             context.SaveChanges();
 
             //********************************************************************************************
@@ -75,9 +66,18 @@ namespace _4fitClub.Migrations
                 new Exercicios {ID=6, Nome="Elevação", Objetivo="Exercicio de Calistenia, com foco no conjuto de músculos superior",
                 Passos="1.Pendurar numa barra com braços estendido. " +
                        "2.Elevar o corpo, com a força dos braços, até o queixo passar a barra",
-                CategoriaFK=5},
+                CategoriaFK=5}
             };
             exercicios.ForEach(ee => context.Exercicios.AddOrUpdate(e => e.Nome, ee));
+            context.SaveChanges();
+
+
+            //****************************************************************************************
+            // adiciona Planos
+            var planos = new List<Planos> {
+                new Planos {ID=1, Nome="Projeto Verão", Descricao="É desta que fico Fit", UserName="david@mail.pt", ListaDeExercicios=new List<Exercicios>{ exercicios[0], exercicios[2], exercicios[3], exercicios[4] } }
+            };
+            planos.ForEach(pp => context.Planos.AddOrUpdate(p => p.Nome, pp));
             context.SaveChanges();
 
             //**********************************************************************************************
@@ -91,12 +91,12 @@ namespace _4fitClub.Migrations
                 new Imagens {ID=5, Nome="Agachamento1.jpg", Ordem=1, Tipo="Imagem", ExercicioFK=3},
                 new Imagens {ID=6, Nome="Agachamento2.jpg", Ordem=2, Tipo="Imagem", ExercicioFK=3},
                 new Imagens {ID=7, Nome="SaltoCorda1.jpg", Ordem=1, Tipo="Imagem", ExercicioFK=4},
-                new Imagens {ID=8, Nome="SaltoCorda2.jpg", Ordem=2, Tipo="Imagem", ExercicioFK=4},
+                new Imagens {ID=8, Nome="SaltoCorda2.jpg", Ordem=2, Tipo="Imagem", ExercicioFK=4}
             };
             imagens.ForEach(ii => context.Imagens.AddOrUpdate(i => i.Nome,ii));
             context.SaveChanges();
 
-
+         
         }
     }
 }

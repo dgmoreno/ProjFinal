@@ -27,8 +27,12 @@
                     <li>@Html.ActionLink("Exercicios", "Index", "Exercicios")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Planos", "Index", "Planos")</li>
-                        
+                        if (User.IsInRole("Utilizador"))
+                        {
+                            <li>@Html.ActionLink("Planos", "Index", "Planos")</li>
+                        }
+                       
+
                         if (User.IsInRole("Manager"))
                         {
                             <li>@Html.ActionLink("Imagens", "Index", "Imagens/Index")</li>

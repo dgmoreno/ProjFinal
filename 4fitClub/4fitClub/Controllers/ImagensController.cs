@@ -55,7 +55,7 @@ namespace _4fitClub.Controllers
             {
                 db.Imagens.Add(imagens);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index/Index");
             }
 
             ViewBag.ExercicioFK = new SelectList(db.Exercicios, "ID", "Nome", imagens.ExercicioFK);
@@ -89,7 +89,7 @@ namespace _4fitClub.Controllers
             {
                 db.Entry(imagens).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index/Index");
             }
             ViewBag.ExercicioFK = new SelectList(db.Exercicios, "ID", "Nome", imagens.ExercicioFK);
             return View(imagens);
@@ -118,7 +118,7 @@ namespace _4fitClub.Controllers
             Imagens imagens = db.Imagens.Find(id);
             db.Imagens.Remove(imagens);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index/Index");
         }
 
         protected override void Dispose(bool disposing)

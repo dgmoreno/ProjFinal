@@ -10,7 +10,7 @@ using _4fitClub.Models;
 
 namespace _4fitClub.Controllers
 {
-    [Authorize(Roles = "Manager,Utilizador")]
+    [Authorize(Roles = "Utilizador")]
     public class PlanosController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -18,7 +18,13 @@ namespace _4fitClub.Controllers
         // GET: Planos
         public ActionResult Index()
         {
-            return View(db.Planos.ToList());
+            var planos = db.Planos
+                            .Where(p => p.UserName.Equals(User.Identity.Name))
+                            .Include(p => p.ListaDeExercicios);
+            
+                
+                
+            return View(planos.ToList());
         }
 
         // GET: Planos/Details/5
@@ -33,6 +39,8 @@ namespace _4fitClub.Controllers
             {
                 return HttpNotFound();
             }
+
+
             return View(planos);
         }
 
