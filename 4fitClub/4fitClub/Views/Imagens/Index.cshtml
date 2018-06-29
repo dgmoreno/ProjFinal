@@ -37,7 +37,10 @@
                 @Html.DisplayFor(modelItem => item.Exercicio.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Nome)
+                @*Html.DisplayFor(modelItem => item.Nome)*@
+                <a href="~/multimedia/@item.Nome" target="_blank">
+                    <img src="~/multimedia/@item.Nome" width="190" height="200" />
+                </a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Ordem)

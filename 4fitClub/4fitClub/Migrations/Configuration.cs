@@ -91,7 +91,11 @@ namespace _4fitClub.Migrations
                 new Imagens {ID=5, Nome="Agachamento1.jpg", Ordem=1, Tipo="Imagem", ExercicioFK=3},
                 new Imagens {ID=6, Nome="Agachamento2.jpg", Ordem=2, Tipo="Imagem", ExercicioFK=3},
                 new Imagens {ID=7, Nome="SaltoCorda1.jpg", Ordem=1, Tipo="Imagem", ExercicioFK=4},
-                new Imagens {ID=8, Nome="SaltoCorda2.jpg", Ordem=2, Tipo="Imagem", ExercicioFK=4}
+                new Imagens {ID=8, Nome="SaltoCorda2.jpg", Ordem=2, Tipo="Imagem", ExercicioFK=4},
+                new Imagens {ID=9, Nome="CobraStretch1.jpg", Ordem=1, Tipo="Imagem", ExercicioFK=5},
+                new Imagens {ID=10, Nome="CobraStretch2.jpg", Ordem=2, Tipo="Imagem", ExercicioFK=5},
+                new Imagens {ID=11, Nome="PullUp1.jpg", Ordem=1, Tipo="Imagem", ExercicioFK=6},
+                new Imagens {ID=11, Nome="PullUp2.jpg", Ordem=2, Tipo="Imagem", ExercicioFK=6}
             };
             imagens.ForEach(ii => context.Imagens.AddOrUpdate(i => i.Nome,ii));
             context.SaveChanges();
