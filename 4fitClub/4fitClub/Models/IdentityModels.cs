@@ -60,6 +60,13 @@ namespace _4fitClub.Models
                 .Single();
         }
 
+        public int GetIDMultimedia()
+        {
+            return this.Database
+                .SqlQuery<int>("Select Next Value For [dbo].[SeqIdImagem]")
+                .Single();
+        }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
