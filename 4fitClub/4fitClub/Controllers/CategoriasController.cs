@@ -93,7 +93,7 @@ namespace _4fitClub.Controllers
                 /// gerar uma mensagem de erro para o utilizador
                 ModelState.AddModelError("", "Ocorreu um erro não determinado na criação da nova Categoria...");
             }
-            ///devolve os dados do Agente à View
+            ///devolve os dados da Categoria à View
             return View(categoria);
         }
 

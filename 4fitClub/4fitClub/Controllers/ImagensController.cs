@@ -60,10 +60,9 @@ namespace _4fitClub.Controllers
 
             if(uploadFotografia != null)
             {
-                if(uploadFotografia.FileName.EndsWith("jpg") || uploadFotografia.FileName.EndsWith("png"))
-                {
+
                     path = Path.Combine(Server.MapPath("~/multimedia/"), nomeImagem);
-                }
+             
 
                 imagens.Nome = nomeImagem;
 

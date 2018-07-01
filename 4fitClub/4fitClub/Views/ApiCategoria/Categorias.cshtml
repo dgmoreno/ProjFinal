@@ -2,8 +2,9 @@
 
 <div class="container">
     @*
-        Container da grelha das categorias.
-        Irá conter os divs com informação sobre as categorias.
+        Container da grelha das categorias e dos exercícios.
+        A grelha das categorias irá conter os divs com informação sobre as categorias.
+        A grelha dos exercícios irá conter os divs com informação sobre as exercícios.
     *@
     <button id="button" class="btn-primary" style="width:100%">Voltar</button>
     <hr />
@@ -34,10 +35,6 @@
             com o mesmo ID).
         *@
         <div id="template-categoria" class="col-sm-4">
-            @*
-                Ver:
-                http://getbootstrap.com/docs/3.3/components/#thumbnails
-            *@
             <a class="thumbnail">
                 @* Imagem da categoria. *@
                 <img class="img-responsive" style="height:150px" />
@@ -46,7 +43,7 @@
                     @* Nome da categoria. *@
                     <h3 style="text-align:center"></h3>
 
-                    @* Descrição. *@
+                    @* Descrição da categoria. *@
                     <p></p>
                 </div>
             </a>
@@ -56,79 +53,31 @@
     @*Div dos exercicios*@
     <div class="hidden">
         @*
-            "Template" HTML de um agente.
+            "Template" HTML de um exercício.
 
-            Em vez de construir o HTML todo manualmente
-            através de JavaScript (document.createElement, entre outros),
-            crio um "esqueleto", e uso a função "cloneNode" (ver função "divAgente")
-            para criar cópias.
-
-            Isto pode ser usado, desde que se tenha cuidado para REMOVER
-            os atributos "ID" dos elementos clonados (não devem existir múltiplos elementos HTML
-            com o mesmo ID).
         *@
         <div id="template-exercicio" class="col-sm-4">
-            @*
-                Ver:
-                http://getbootstrap.com/docs/3.3/components/#thumbnails
-            *@
 
-                <div class="caption">
-                    @* Nome do exercicio *@
-                    <h3 style="text-align:center"></h3>
+            <div class="caption">
+                @* Nome do exercicio *@
+                <h3 style="text-align:center"></h3>
 
-                    @* Objetivo *@
-                    <p id="objetivo" style="text-align:center"></p>
-                    <p id="passos" style="text-align:center"></p>
-                </div>
+                @* Objetivo *@
+                <p id="objetivo" style="text-align:center"></p>
+                @* passos*@
+                <p id="passos" style="text-align:center"></p>
+            </div>
             
         </div>
     </div>
-
-    @*
-        Nota: o @@ abaixo é por causa do Razor, é transformado em apenas um @
-        quando vai para o HTML.
-
-        Se estivesse num ficheiro JavaScript (coisa que não fiz para estar tudo junto,
-        e ser mais fácil de ler de uma só vez), não colocaria @@ nos comentários de documentação.
-
-        ---
-
-        # Comentários /** em JavaScript:
-
-        O uso de @param e @returns ajuda o Visual Studio e outras ferramentas
-        com IntelliSense.
-
-        Quando eu faço
-        @returns {Promise<Array<{ ID: number, Nome: string, Esquadra: string, Fotografia: string | null }>}
-
-        Estou a dizer que a função devolve:
-        - Objectos do tipo Promise<>
-        - Cujo tipo de dados (no .then) é Array<>
-        - Cada item do Array (definido entre <>) é um objeto ({}) com o seguinte formato:
-        -- ID: número,
-        -- Nome: string,
-        -- Esquadra: string,
-        -- Fotografia: string, ou NULL.
-
-        ---
-
-        #  "var" vs. "let".
-
-        O "let" foi introduzido no ES2015 como uma nova metodologia para definir variáveis em
-        JavaScript.
-        Eu expliquei os detalhes no vídeo da solução do exercício da Discoteca, mas
-        para ser breve, o "var" só se usa em browsers antigos. O let tem menos
-        problemas, especialmente quando se fazem funções dentro de loops.
-    *@
     <script>
+        //Aquisição da grelha das categoriasm, dos exercícios e dos botões
+        //para fazer a troca de Div(Exemplo Racing Legends)
+        var categoria = document.getElementById("grelha-categorias");
+        var exercicio = document.getElementById("grelha-exercicios");
+        var botao = document.getElementById("button");
 
-    var categoria = document.getElementById("grelha-categorias");
-    var exercicio = document.getElementById("grelha-exercicios");
-
-    var botao = document.getElementById("button");
-
-
+        //evento do botão que esconde o div dos exercicios e volta ao div inicial
         botao.addEventListener("click", function () {
             exercicio.style.display = "none";
             categoria.style.display = "block";
@@ -171,7 +120,7 @@
     ///////////////////////////////////////////////////////
 
     /**
-     * Cria um div para um agente.
+     * Cria um div para uma categoria.
      *
      * @@param {{ ID: number, Nome: string, Descricao: string, Imagem: string | null }} categoria
      * @@returns {HTMLDivElement}
@@ -193,7 +142,7 @@
         // A partir do template, obter o <img />
         let ImgCategoria = template.querySelector('img');
 
-        // Se o Agente tiver fotografia, uso-a.
+        // Se a categoria tiver fotografia, uso-a.
         // caso contrário, escondo a imagem.
         if (categoria.Imagem != null) {
             ImgCategoria.src = `/imagens/${categoria.Imagem}`;
@@ -201,10 +150,12 @@
         } else {
             ImgCategoria.classList.add('hidden');
         }
-        // Defino o nome e a esquadra no template...
+        // Defino o nome e a Descrição da categoria no template...
         template.querySelector('.caption > h3').textContent = categoria.Nome;
         template.querySelector('.caption > p').textContent = `Descrição: ${categoria.Descricao}`;
 
+        //evento que ao clicar numa categoria esconde o div 
+        //e mostra os exercícios que pertencem à categoria
         template.addEventListener("click", function () {
             if (exercicio.style.display == "none") {
                 exercicio.innerHTML = "";
@@ -232,14 +183,11 @@
             * @@type {HTMLDivElement}
             */
         let template = document.querySelector('#template-exercicio').cloneNode(true);
-        //let templateDet = document.querySelector('#template-exercicio-detalhe').cloneNode(true);
 
-        // Não se permitem IDs duplicados...
         template.removeAttribute('id');
-        //templateDet.removeAttribute('id');
 
 
-        // Defino o nome e a esquadra no template...
+        // Defino o nome, o objetivo e os passos do exercício
         template.querySelector('.caption > h3').textContent = IdCategoria.Nome;
         template.querySelector('.caption > #objetivo').textContent = `Objetivo: ${IdCategoria.Objetivo}`;
         template.querySelector('.caption > #passos').textContent = `${IdCategoria.Passos}`;
@@ -251,7 +199,7 @@
 
 
     /**
-     * Cria o <div /> de um Agente, e adiciona-o à grelha
+     * Cria o <div /> de uma Categoria, e adiciona-a à grelha
      * de agentes.
      * @@param {{ ID: number, Nome: string, Descricao: string, Imagem: string | null }} categoria
      */
@@ -296,6 +244,11 @@
             })
     }
 
+    /**
+     * inicia o ecrã dos Exercícios
+     */
+
+    
     function iniciarExercicio(idCategoria) {
         getExercicios(idCategoria)
             .then((exercixios, idCategoria) => {
@@ -307,12 +260,14 @@
             })
     }
 
+    //função que esconde o Div das categorias, e mostra o ecrã dos exercícios
     function trocaDiv(id_Categoria) {
         categoria.style.display = "none";
 
         iniciarExercicio(id_Categoria);
     }
 
+    //teste para ter o output esperado
     //iniciarExercicio(2);
 
 
