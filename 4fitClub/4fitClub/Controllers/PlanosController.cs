@@ -18,6 +18,7 @@ namespace _4fitClub.Controllers
         // GET: Planos
         public ActionResult Index()
         {
+            ///retorna os plnos do user que efetuou login
             var planos = db.Planos
                             .Where(p => p.UserName.Equals(User.Identity.Name))
                             .Include(p => p.ListaDeExercicios);
@@ -39,6 +40,8 @@ namespace _4fitClub.Controllers
             {
                 return HttpNotFound();
             }
+
+
 
 
             return View(planos);

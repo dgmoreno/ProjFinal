@@ -20,11 +20,11 @@ namespace _4fitClub.api
 
             IQueryable < Exercicios > query = db.Exercicios;
 
-
+                ///pesquisa dos exercicios de uma dada categoria
                 query = query
                     .Where(exercicio => exercicio.CategoriaFK.Equals(categoria));
-         
 
+            ///apresentação dos atributos de um exercicio
             var resultado = query
                         .Select(exercicio => new
                         {

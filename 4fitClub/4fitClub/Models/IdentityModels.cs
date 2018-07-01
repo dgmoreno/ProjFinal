@@ -53,6 +53,9 @@ namespace _4fitClub.Models
 
         public virtual DbSet<Imagens> Imagens { get; set; } //cria tabela Imagens
 
+
+
+        //Id da categoria para utilizar no nome das imagens das categorias
         public int GetIDCategoria()
         {
             return this.Database

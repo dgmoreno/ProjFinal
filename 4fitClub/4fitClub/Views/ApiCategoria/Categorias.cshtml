@@ -2,8 +2,8 @@
 
 <div class="container">
     @*
-        Container da grelha de agentes.
-        Irá conter os divs com informação sobre agentes.
+        Container da grelha das categorias.
+        Irá conter os divs com informação sobre as categorias.
     *@
     <button id="button" class="btn-primary" style="width:100%">Voltar</button>
     <hr />
@@ -13,10 +13,7 @@
 
 
 </div>
-@*
-    Ver Views/Shared/Layout.cshtml para mais informações sobre
-    secções em Razor.
-*@
+
 @section scripts {
 
     @*
@@ -25,7 +22,7 @@
     *@
     <div class="hidden">
         @*
-            "Template" HTML de um agente.
+            "Template" HTML de uma categorias.
 
             Em vez de construir o HTML todo manualmente
             através de JavaScript (document.createElement, entre outros),
@@ -42,14 +39,14 @@
                 http://getbootstrap.com/docs/3.3/components/#thumbnails
             *@
             <a class="thumbnail">
-                @* Imagem do agente. *@
+                @* Imagem da categoria. *@
                 <img class="img-responsive" style="height:150px" />
 
                 <div class="caption">
-                    @* Nome do agente. *@
+                    @* Nome da categoria. *@
                     <h3 style="text-align:center"></h3>
 
-                    @* Esquadra e outras informações. *@
+                    @* Descrição. *@
                     <p></p>
                 </div>
             </a>

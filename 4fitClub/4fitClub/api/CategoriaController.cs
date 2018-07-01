@@ -35,19 +35,6 @@ namespace _4fitClub.api
             return Ok(resultado);
         }
 
-        //obter uma categoria, pelo seu ID
-        // - Se não existir -> 404 (Not Found)
-        [ResponseType(typeof(Categorias))]
-        public IHttpActionResult GetCategorias(int id)
-        {
-            Categorias categorias = db.Categorias.Find(id);
-            if(categorias == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(categorias);
-        }
 
 
 

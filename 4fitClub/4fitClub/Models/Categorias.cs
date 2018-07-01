@@ -15,7 +15,7 @@ namespace _4fitClub.Models
 
 
         [Key]
-        public int ID { get; set; } //Primary key
+        public int ID { get; set; } //Primary key 
 
         [Required]
         public string Nome { get; set; }
