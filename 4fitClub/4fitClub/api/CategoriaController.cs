@@ -28,7 +28,7 @@ namespace _4fitClub.api
                             categoria.ID,
                             categoria.Nome,
                             categoria.Descricao,
-                            categoria.Imagem,
+                            categoria.Imagem
                         }).ToList();
 
 

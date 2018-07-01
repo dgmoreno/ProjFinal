@@ -1,0 +1,330 @@
+﻿<h2 style="text-align:center">4 Fit Club</h2>
+
+<div class="container">
+    @*
+        Container da grelha de agentes.
+        Irá conter os divs com informação sobre agentes.
+    *@
+    <button id="button" class="btn-primary" style="width:100%">Voltar</button>
+    <hr />
+    <div class="row" id="grelha-categorias"></div>
+
+    <div class="row" id="grelha-exercicios"></div>
+
+
+</div>
+@*
+    Ver Views/Shared/Layout.cshtml para mais informações sobre
+    secções em Razor.
+*@
+@section scripts {
+
+    @*
+        Container para "templates". Adiciono a classe "hidden" do Bootstrap (3)
+        para que os conteúdos não sejam visíveis para o utilizador.
+    *@
+    <div class="hidden">
+        @*
+            "Template" HTML de um agente.
+
+            Em vez de construir o HTML todo manualmente
+            através de JavaScript (document.createElement, entre outros),
+            crio um "esqueleto", e uso a função "cloneNode" (ver função "divAgente")
+            para criar cópias.
+
+            Isto pode ser usado, desde que se tenha cuidado para REMOVER
+            os atributos "ID" dos elementos clonados (não devem existir múltiplos elementos HTML
+            com o mesmo ID).
+        *@
+        <div id="template-categoria" class="col-sm-4">
+            @*
+                Ver:
+                http://getbootstrap.com/docs/3.3/components/#thumbnails
+            *@
+            <a class="thumbnail">
+                @* Imagem do agente. *@
+                <img class="img-responsive" style="height:150px" />
+
+                <div class="caption">
+                    @* Nome do agente. *@
+                    <h3 style="text-align:center"></h3>
+
+                    @* Esquadra e outras informações. *@
+                    <p></p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    @*Div dos exercicios*@
+    <div class="hidden">
+        @*
+            "Template" HTML de um agente.
+
+            Em vez de construir o HTML todo manualmente
+            através de JavaScript (document.createElement, entre outros),
+            crio um "esqueleto", e uso a função "cloneNode" (ver função "divAgente")
+            para criar cópias.
+
+            Isto pode ser usado, desde que se tenha cuidado para REMOVER
+            os atributos "ID" dos elementos clonados (não devem existir múltiplos elementos HTML
+            com o mesmo ID).
+        *@
+        <div id="template-exercicio" class="col-sm-4">
+            @*
+                Ver:
+                http://getbootstrap.com/docs/3.3/components/#thumbnails
+            *@
+
+                <div class="caption">
+                    @* Nome do exercicio *@
+                    <h3 style="text-align:center"></h3>
+
+                    @* Objetivo *@
+                    <p id="objetivo" style="text-align:center"></p>
+                    <p id="passos" style="text-align:center"></p>
+                </div>
+            
+        </div>
+    </div>
+
+    @*
+        Nota: o @@ abaixo é por causa do Razor, é transformado em apenas um @
+        quando vai para o HTML.
+
+        Se estivesse num ficheiro JavaScript (coisa que não fiz para estar tudo junto,
+        e ser mais fácil de ler de uma só vez), não colocaria @@ nos comentários de documentação.
+
+        ---
+
+        # Comentários /** em JavaScript:
+
+        O uso de @param e @returns ajuda o Visual Studio e outras ferramentas
+        com IntelliSense.
+
+        Quando eu faço
+        @returns {Promise<Array<{ ID: number, Nome: string, Esquadra: string, Fotografia: string | null }>}
+
+        Estou a dizer que a função devolve:
+        - Objectos do tipo Promise<>
+        - Cujo tipo de dados (no .then) é Array<>
+        - Cada item do Array (definido entre <>) é um objeto ({}) com o seguinte formato:
+        -- ID: número,
+        -- Nome: string,
+        -- Esquadra: string,
+        -- Fotografia: string, ou NULL.
+
+        ---
+
+        #  "var" vs. "let".
+
+        O "let" foi introduzido no ES2015 como uma nova metodologia para definir variáveis em
+        JavaScript.
+        Eu expliquei os detalhes no vídeo da solução do exercício da Discoteca, mas
+        para ser breve, o "var" só se usa em browsers antigos. O let tem menos
+        problemas, especialmente quando se fazem funções dentro de loops.
+    *@
+    <script>
+
+    var categoria = document.getElementById("grelha-categorias");
+    var exercicio = document.getElementById("grelha-exercicios");
+
+    var botao = document.getElementById("button");
+
+
+        botao.addEventListener("click", function () {
+            exercicio.style.display = "none";
+            categoria.style.display = "block";
+
+        })
+
+    ///////////////////////////////////////////////////////
+    // Leitura de dados
+    ///////////////////////////////////////////////////////
+
+    /**
+     * Função que vai buscar uma lista de categorias.
+     *
+     * @@returns {Promise<Array<{ ID: number, Nome: string, Descricao: string, Imagem: string | null }>}
+     */
+    function getCategorias() {
+        return fetch("/api/categoria", {
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(resposta => resposta.json()); // JSON dos agentes.
+    }
+
+    /**
+     * Função que vai buscar uma lista de exercicios passando por parâmetro o Id da categoria
+     *
+     *
+     * @@returns  {Promisse<Array<{ID: number, Nome: string, Objetivo: string, Passos: string | null}>}
+    */
+    function getExercicios(categoria) {
+        return fetch("/api/exercicios?categoria=" + categoria, {
+        headers: { 'Accept': 'application/json' }
+        })
+        .then(resposta => resposta.json());
+    }
+
+
+
+    ///////////////////////////////////////////////////////
+    // Mostrar dados no ecrã
+    ///////////////////////////////////////////////////////
+
+    /**
+     * Cria um div para um agente.
+     *
+     * @@param {{ ID: number, Nome: string, Descricao: string, Imagem: string | null }} categoria
+     * @@returns {HTMLDivElement}
+     */
+    function divCategoria(categoria) {
+        /**
+         * Crio uma cópia do elemento HTML com ID "template-agente"
+         * com a função "cloneNode". O "true" no "cloneNode" é para indicar
+         * que quero também copiar os elementos filho.
+         *
+         * @@type {HTMLDivElement}
+         */
+        let template = document.querySelector('#template-categoria').cloneNode(true);
+
+        // Não se permitem IDs duplicados...
+        template.removeAttribute('id');
+
+        let IdCategoria = categoria.ID;
+        // A partir do template, obter o <img />
+        let ImgCategoria = template.querySelector('img');
+
+        // Se o Agente tiver fotografia, uso-a.
+        // caso contrário, escondo a imagem.
+        if (categoria.Imagem != null) {
+            ImgCategoria.src = `/imagens/${categoria.Imagem}`;
+
+        } else {
+            ImgCategoria.classList.add('hidden');
+        }
+        // Defino o nome e a esquadra no template...
+        template.querySelector('.caption > h3').textContent = categoria.Nome;
+        template.querySelector('.caption > p').textContent = `Descrição: ${categoria.Descricao}`;
+
+        template.addEventListener("click", function () {
+            if (exercicio.style.display == "none") {
+                exercicio.innerHTML = "";
+                exercicio.style.display = "block";
+            }
+            trocaDiv(IdCategoria)
+
+        });
+        return template;
+    }
+
+
+    /**
+    * Cria um div para um exercicio.
+    *
+    * @@param {{ ID: number, Nome: string, Objetivo: string, Passos: string | null }} categoria
+    * @@returns {HTMLDivElement}
+    */
+    function divExercicio(IdCategoria) {
+        /**
+            * Crio uma cópia do elemento HTML com ID "template-agente"
+            * com a função "cloneNode". O "true" no "cloneNode" é para indicar
+            * que quero também copiar os elementos filho.
+            *
+            * @@type {HTMLDivElement}
+            */
+        let template = document.querySelector('#template-exercicio').cloneNode(true);
+        //let templateDet = document.querySelector('#template-exercicio-detalhe').cloneNode(true);
+
+        // Não se permitem IDs duplicados...
+        template.removeAttribute('id');
+        //templateDet.removeAttribute('id');
+
+
+        // Defino o nome e a esquadra no template...
+        template.querySelector('.caption > h3').textContent = IdCategoria.Nome;
+        template.querySelector('.caption > #objetivo').textContent = `Objetivo: ${IdCategoria.Objetivo}`;
+        template.querySelector('.caption > #passos').textContent = `${IdCategoria.Passos}`;
+
+        return template;
+    }
+
+
+
+
+    /**
+     * Cria o <div /> de um Agente, e adiciona-o à grelha
+     * de agentes.
+     * @@param {{ ID: number, Nome: string, Descricao: string, Imagem: string | null }} categoria
+     */
+    function adicionarCategoria(categoria) {
+        let template = divCategoria(categoria);
+
+        let grelha = document.querySelector('#grelha-categorias');
+
+        grelha.appendChild(template);
+     }
+
+
+    /**
+    * Cria o <div /> de um Exrcicio, e adiciona-o à grelha
+    * de agentes.
+    * @@param {{ ID: number, Nome: string, Objetivo: string, Passos: string | null }} exercicio
+    */
+    function adicionarExercicio(IdCategoria) {
+        let template = divExercicio(IdCategoria);
+
+        let grelha = document.querySelector('#grelha-exercicios');
+
+        grelha.appendChild(template);
+    }
+
+
+    ///////////////////////////////////////////////////////
+    // Arranque
+    ///////////////////////////////////////////////////////
+
+    /**
+     * Inicia o ecrã dos Agentes.
+     */
+    function iniciarCategorias() {
+        getCategorias()
+            .then(categorias => {
+                let grelha = document.querySelector('#grelha-categorias');
+
+                for (let categoria of categorias) {
+                    adicionarCategoria(categoria);
+                }
+            })
+    }
+
+    function iniciarExercicio(idCategoria) {
+        getExercicios(idCategoria)
+            .then((exercixios, idCategoria) => {
+                let grelha = document.querySelector('#grelha-exercicios');
+
+                for (let exercicio of exercixios) {
+                    adicionarExercicio(exercicio);
+                }
+            })
+    }
+
+    function trocaDiv(id_Categoria) {
+        categoria.style.display = "none";
+
+        iniciarExercicio(id_Categoria);
+    }
+
+    //iniciarExercicio(2);
+
+
+
+
+    iniciarCategorias();
+
+    </script>
+
+}
+
+

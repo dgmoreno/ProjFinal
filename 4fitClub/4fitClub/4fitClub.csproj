@@ -200,6 +200,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="api\CategoriaController.cs" />
+    <Compile Include="api\ExerciciosController.cs" />
+    <Compile Include="api\ImagensController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -207,6 +209,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApiCategoriaController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\ExerciciosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -244,6 +247,7 @@
     <Content Include="imagens\Equilibrio.png" />
     <Content Include="imagens\Flexibilidade.png" />
     <Content Include="imagens\Musculacao.png" />
+    <Content Include="logotipo\fourfitclub.jpg" />
     <Content Include="multimedia\Agachamento1.JPG" />
     <Content Include="multimedia\Agachamento2.JPG" />
     <Content Include="multimedia\CobraStretch1.JPG" />
@@ -327,7 +331,7 @@
     <Content Include="Views\Imagens\Edit.cshtml" />
     <Content Include="Views\Imagens\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\HttpPostedFileBase.cshtml" />
-    <Content Include="Views\Teste\categoria.cshtml" />
+    <Content Include="Views\ApiCategoria\Categorias.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
