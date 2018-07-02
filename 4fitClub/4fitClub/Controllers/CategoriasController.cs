@@ -52,46 +52,61 @@ namespace _4fitClub.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateCategoriaViewModel model)
+        public ActionResult Create([Bind(Include = "Nome,Descricao")] Categorias categoria, HttpPostedFileBase uploadImagem)
         {
-            if (ModelState.IsValid)
-            {
-                return View(model);
-
-            }
-
-            var categoria = new Categorias
-            {
-                ID = db.GetIDCategoria(),
-                Nome = model.Nome,
-                Descricao = model.Descricao
-            };
-            ///Verificação se o ficheiro fornecido é uma imagem é feito no ViewModel
-
-            ///cria o nome da imagem
-            string nomeImagem = "Categoria_" + categoria.ID + Path.GetExtension(model.Imagem.FileName);
-            /// indica onde a imagem será guardada
-            string caminhoParaImagem = Path.Combine(Server.MapPath("~/imagens/"), nomeImagem);
-            ///guarda o nome da imagem na BD
-            categoria.Imagem = nomeImagem;
-
+            
+            
+            int idNovaCategoria = 0;
             try
             {
-                /// guardar a imagem no disco rígido
-                model.Imagem.SaveAs(caminhoParaImagem);
-                /// adiciona na estrutura de dados, na memória do servidor,
-                /// o objeto Categorias
-                db.Categorias.Add(categoria);
-                /// faz 'commit' na BD
-                db.SaveChanges();
-
-                ///redireciona o utilizador para a página de início
-                return RedirectToAction("Index");
+                //id da categoria será +1 que o último id
+                idNovaCategoria = db.Categorias.Max(c => c.ID) + 1;
             }
-            catch (Exception)
+            catch
             {
-                /// gerar uma mensagem de erro para o utilizador
-                ModelState.AddModelError("", "Ocorreu um erro não determinado na criação da nova Categoria...");
+                idNovaCategoria = 1;
+            }
+            
+
+            ///cria o nome da imagem
+            string nomeImagem = "Categoria_" + idNovaCategoria + ".jpg";
+            string path = "";
+       
+            
+            if(uploadImagem != null)
+            {
+                if (uploadImagem.FileName.EndsWith("jpg") || uploadImagem.FileName.EndsWith("png"))
+                {
+                    //caminho para guardar a imagem
+                    path = Path.Combine(Server.MapPath("~/imagens/"), nomeImagem);
+                }
+                //novo nome da imagem
+                categoria.Imagem = nomeImagem;
+            }
+            else
+            {
+                ModelState.AddModelError("", "Não foi fornecida uma imagem");
+                return View(categoria);
+            }
+
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //adicionar os dados à tabela Categorias
+                    db.Categorias.Add(categoria);
+                    //commit na base de dados
+                    db.SaveChanges();
+                    //guardar a imagem no caminho criado anteriormente
+                    uploadImagem.SaveAs(path);
+                    //redireciona para a view inical das categorias
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Houve um erro com a criação da nova Categoria...");
+                }
             }
             ///devolve os dados da Categoria à View
             return View(categoria);
@@ -112,16 +127,10 @@ namespace _4fitClub.Controllers
             {
                 ///return HttpNotFound();
                 return RedirectToAction("Index");
+               
             }
 
-            var model = new EditCategoriaViewModel
-            {
-                ID = categorias.ID,
-                Descricao = categorias.Descricao,
-                ImagemAtual = categorias.Imagem
-            };
-
-            return View(model);
+            return View(categorias);
         }
 
         // POST: Categorias/Edit/5
@@ -129,68 +138,38 @@ namespace _4fitClub.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EditCategoriaViewModel model)
+        public ActionResult Edit([Bind(Include = "ID,Nome,Descricao,Imagem")] Categorias categoria, HttpPostedFileBase uploadImagemEdit)
         {
+            string novaImagem = "Categoria_" + categoria.ID + ".jpg";
+
+            string path = "";
+
+            if(uploadImagemEdit != null)
+            {
+                if (uploadImagemEdit.FileName.EndsWith("jpg") || uploadImagemEdit.FileName.EndsWith("png"))
+                {
+                    path = Path.Combine(Server.MapPath("~/imagens/"), novaImagem);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Ficheiro não é uma imagem");
+                }
+                categoria.Imagem = novaImagem;
+            }
             if (ModelState.IsValid)
             {
-                return View(model);
-            }
+                db.Entry(categoria).State = EntityState.Modified;
+                db.SaveChanges();
 
-            ///Obtém a categoria a editar, caso não encontre gera uma mensagem de erro
-            var categoria = db.Categorias.Find(model.ID);
-
-            if(categoria == null)
-            {
-                ModelState.AddModelError("", "A categoria não existe");
-                return View(model);
-            }
-
-            string novoNome = "";
-            string nomeAntigo = "";
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (uploadImagemEdit != null)
                 {
-                    if(model.Imagem != null)
-                    {
-                        ///guarda-se os dados da imagem antiga
-                        ///para eliminar mais tarde do disco 
-                        nomeAntigo = categoria.Imagem;
-                        ///o novo nome vai conter a data e hora da lateração
-                        novoNome = "Categoria_" + categoria.ID + DateTime.Now.ToString("_yyyyMMdd_hhmmss") + Path.GetExtension(model.Imagem.FileName).ToLower();
-                        ///atualiza os dados da categoria
-                        categoria.Imagem = novoNome;
-
-                        ///guarda a nova imagem no disco
-                        model.Imagem.SaveAs(Path.Combine(Server.MapPath("~/imagens/"), novoNome));
-                    }
-                    ///Passar os dados do modelo para a categoria
-                    categoria.Descricao = model.Descricao;
-                    ///guarda os dados da categoria
-                    db.Entry(categoria).State = EntityState.Modified;
-                    ///commite na base de dados
-                    db.SaveChanges();
-
-                    ///remoção da imagem antiga no caso de ter sido fornecida uma imagem 
-                    if (model.Imagem != null)
-                    {
-                        System.IO.File.Delete(Path.Combine(Server.MapPath("~/imagens/"), nomeAntigo));
-                    }
-                    ///enviar os dados para a página inicial das Categorias
-                    return RedirectToAction("Index");
+                    uploadImagemEdit.SaveAs(path);
                 }
-                catch
-                {
-                    ///Se houver um erro, mostra-se uma mensagem de erro
-                    ModelState.AddModelError("", string.Format("Ocorreu um erro com a edição dos dados da categoria {0}", categoria.Nome));
-                }
+
+                return RedirectToAction("Index");
             }
 
-            ///preenche-se novamente os campos que se possam ter perdido
-            model.ImagemAtual = categoria.Imagem;
-
-            return View(model);
+            return View(categoria);
         }
 
         // GET: Categorias/Delete/5

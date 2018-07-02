@@ -19,8 +19,10 @@ namespace _4fitClub.Controllers
         // GET: Imagens
         public ActionResult Index()
         {
-            var imagens = db.Imagens.Include(i => i.Exercicio);
-            return View(imagens.ToList());
+            //var imagens = db.Imagens.Include(i => i.Exercicio);
+            //Ordena as imagens por Tipo de exercicio
+            var listaDeImagens = db.Imagens.ToList().OrderBy(i => i.ExercicioFK);
+            return View(listaDeImagens);
         }
 
         // GET: Imagens/Details/5
@@ -54,16 +56,28 @@ namespace _4fitClub.Controllers
         {
             int id = 0;
 
-            string nomeImagem = "Img_" + id + ".jpg";
+            try
+            {
+                // o id será mais 1 que o último
+                id = db.Imagens.Max(i => i.ID) + 1;
+            }
+            catch(Exception)
+            {
+                id = 1;
+            }
 
+            imagens.ID = id;
+            //atribuição do nome da imagem para ser guardada na base de dados
+            string nomeImagem = "Img_" + id + ".jpg";
+            //var auxiliar
             string path = "";
 
             if(uploadFotografia != null)
             {
-
+                    //caminho para a imagem
                     path = Path.Combine(Server.MapPath("~/multimedia/"), nomeImagem);
              
-
+                //novo nome da imagem
                 imagens.Nome = nomeImagem;
 
 
@@ -78,9 +92,13 @@ namespace _4fitClub.Controllers
             {
                 try
                 {
+                    //adiciona a base de dados os novos dados
                     db.Imagens.Add(imagens);
+                    //commit na base de dados
                     db.SaveChanges();
+                    //guarda a fotografia na base de dados no caminho feito anteriormente
                     uploadFotografia.SaveAs(path);
+                    //redireciona para a View das imagens
                     return RedirectToAction("Index/Index");
                 }
                 catch (Exception)

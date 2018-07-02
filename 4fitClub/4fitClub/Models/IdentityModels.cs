@@ -54,7 +54,7 @@ namespace _4fitClub.Models
         public virtual DbSet<Imagens> Imagens { get; set; } //cria tabela Imagens
 
 
-
+/*
         //Id da categoria para utilizar no nome das imagens das categorias
         public int GetIDCategoria()
         {
@@ -77,7 +77,7 @@ namespace _4fitClub.Models
                 .SqlQuery<int>("Select Next Value For [dbo].[SeqIdImagem]")
                 .Single();
         }
-
+        */
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

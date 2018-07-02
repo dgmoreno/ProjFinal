@@ -40,7 +40,7 @@ namespace _4fitClub.Controllers
             {
                 return HttpNotFound();
             }
-
+            /// ideia seria colocar os exercícios relacionados com o plano
 
 
 
