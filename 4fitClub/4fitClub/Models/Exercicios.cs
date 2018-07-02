@@ -38,6 +38,7 @@ namespace _4fitClub.Models
         //relação muitos para muitos com os diferentes Planos de treino
         public virtual ICollection<Planos> ListaDePlanos { get; set; }
 
+        //relação muitos para muitos com os diferentes Planos de treino
         public virtual ICollection<Imagens> ListaDeImagens { get; set; }
 
 

@@ -63,8 +63,8 @@ namespace _4fitClub.Migrations
                        "3.Baixe o tronco de forma lenta, até regressar à posição inicial. " +
                        "4.Repitas os passos entre 30 segundos a 1 minuto",
                 CategoriaFK=3},
-                new Exercicios {ID=6, Nome="Elevação", Objetivo="Exercicio de Calistenia, com foco no conjuto de músculos superior",
-                Passos="1.Pendurar numa barra com braços estendido. " +
+                new Exercicios {ID=6, Nome="Elevação", Objetivo="Exercicio de Calistenia, com foco no conjuto de músculos superiores",
+                Passos="1.Pendurar numa barra com braços estendido."+
                        "2.Elevar o corpo, com a força dos braços, até o queixo passar a barra",
                 CategoriaFK=5}
             };

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -49,13 +50,43 @@ namespace _4fitClub.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nome,Ordem,Tipo,ExercicioFK")] Imagens imagens)
+        public ActionResult Create([Bind(Include = "ID,Ordem,Tipo,ExercicioFK")] Imagens imagens, HttpPostedFileBase uploadFotografia)
         {
+            int id = 0;
+
+            string nomeImagem = "Img_" + id + ".jpg";
+
+            string path = "";
+
+            if(uploadFotografia != null)
+            {
+
+                    path = Path.Combine(Server.MapPath("~/multimedia/"), nomeImagem);
+             
+
+                imagens.Nome = nomeImagem;
+
+
+            }
+            else
+            {
+                ModelState.AddModelError("", "Não foi fornecida uma imagem");
+                return View(imagens);
+            }
+
             if (ModelState.IsValid)
             {
-                db.Imagens.Add(imagens);
-                db.SaveChanges();
-                return RedirectToAction("Index/Index");
+                try
+                {
+                    db.Imagens.Add(imagens);
+                    db.SaveChanges();
+                    uploadFotografia.SaveAs(path);
+                    return RedirectToAction("Index/Index");
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("", "Houve um erro na adição da imagem...");
+                }
             }
 
             ViewBag.ExercicioFK = new SelectList(db.Exercicios, "ID", "Nome", imagens.ExercicioFK);
@@ -83,12 +114,34 @@ namespace _4fitClub.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nome,Ordem,Tipo,ExercicioFK")] Imagens imagens)
+        public ActionResult Edit([Bind(Include = "ID,Nome,Ordem,Tipo,ExercicioFK")] Imagens imagens, HttpPostedFileBase uploadFotografia)
         {
+            string nomeImagem = "Img_" + imagens.ID + ".jpg";
+
+            string path = "";
+
+            if (uploadFotografia != null)
+            {
+                if (uploadFotografia.FileName.EndsWith("jpg") || uploadFotografia.FileName.EndsWith("png"))
+                {
+                    path = Path.Combine(Server.MapPath("~/multimedia/"), nomeImagem);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Ficheiro não é uma imagem");
+                }
+                imagens.Nome = nomeImagem;
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(imagens).State = EntityState.Modified;
                 db.SaveChanges();
+
+                if(uploadFotografia != null)
+                {
+                    uploadFotografia.SaveAs(path);
+
+                }
                 return RedirectToAction("Index/Index");
             }
             ViewBag.ExercicioFK = new SelectList(db.Exercicios, "ID", "Nome", imagens.ExercicioFK);
