@@ -18,7 +18,7 @@ namespace _4fitClub.Controllers
         // GET: Planos
         public ActionResult Index()
         {
-            ///retorna os plnos do user que efetuou login
+            ///retorna os planos do user que efetuou login
             var planos = db.Planos
                             .Where(p => p.UserName.Equals(User.Identity.Name))
                             .Include(p => p.ListaDeExercicios);
@@ -33,12 +33,12 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Planos planos = db.Planos.Find(id);
             if (planos == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             /// ideia seria colocar os exercícios relacionados com o plano
 
@@ -78,12 +78,12 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Planos planos = db.Planos.Find(id);
             if (planos == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(planos);
         }
@@ -111,12 +111,12 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Planos planos = db.Planos.Find(id);
             if (planos == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(planos);
         }

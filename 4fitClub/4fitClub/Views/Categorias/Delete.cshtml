@@ -12,43 +12,46 @@
 <body>
     <h3>Tem a certeza que quer eliminar Categoria?</h3>
     <div>
-        <h4>Categorias</h4>
+        <hr />
+        @* HTML Helper para apresentar as mensagens de erro *@
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <hr />
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayName("Categoria")
                 @*Html.DisplayNameFor(model => model.Nome)*@
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Nome)
             </dd>
-    
+
             <dt>
                 @Html.DisplayName("Descrição")
                 @*Html.DisplayNameFor(model => model.Descricao)*@
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Descricao)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Imagem)
             </dt>
-    
+
             <dd>
                 @*Html.DisplayFor(model => model.Imagem)*@
                 <a href="~/imagens/@Model.Imagem" target="_blank">
-                    <img src="~/imagens/@Model.Imagem" width="50" height="50" />
+                    <img src="~/imagens/@Model.Imagem" width="100" />
                 </a>
             </dd>
-    
+
         </dl>
-    
-        @using (Html.BeginForm()) {
+
+        @using (Html.BeginForm())
+        {
             @Html.AntiForgeryToken()
-    
+
             <div class="form-actions no-color">
                 <input type="submit" value="Delete" class="btn btn-danger" /> |
                 @Html.ActionLink("Voltar atrás", "Index")

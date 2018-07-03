@@ -30,14 +30,20 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Categorias categorias = db.Categorias.Find(id);
             if (categorias == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
+            //var a = db.Exercicios.Where(e => e.CategoriaFK.Equals(categorias)).Include(e => e.Categoria);
+
+
             return View(categorias);
+
+            
+
         }
 
         // GET: Categorias/Create
@@ -144,11 +150,12 @@ namespace _4fitClub.Controllers
 
             string path = "";
 
-            if(uploadImagemEdit != null)
+            if(uploadImagemEdit!=null)
             {
                 if (uploadImagemEdit.FileName.EndsWith("jpg") || uploadImagemEdit.FileName.EndsWith("png"))
                 {
                     path = Path.Combine(Server.MapPath("~/imagens/"), novaImagem);
+                   
                 }
                 else
                 {
@@ -156,6 +163,8 @@ namespace _4fitClub.Controllers
                 }
                 categoria.Imagem = novaImagem;
             }
+
+
             if (ModelState.IsValid)
             {
                 db.Entry(categoria).State = EntityState.Modified;
@@ -178,12 +187,12 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Categorias categorias = db.Categorias.Find(id);
             if (categorias == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(categorias);
         }
@@ -193,10 +202,21 @@ namespace _4fitClub.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Categorias categorias = db.Categorias.Find(id);
-            db.Categorias.Remove(categorias);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            Categorias categoria = db.Categorias.Find(id);
+            try
+            {
+                db.Categorias.Remove(categoria);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                ModelState.AddModelError("", string.Format("Não é possível apagar a Categoria {0}, existem exercícios associados à categoria",
+                                           categoria.Nome)
+               );
+            }
+
+            return View(categoria);
         }
 
         protected override void Dispose(bool disposing)

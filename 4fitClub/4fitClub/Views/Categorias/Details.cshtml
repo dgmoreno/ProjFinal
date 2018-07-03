@@ -18,31 +18,31 @@
                 @Html.DisplayName("Categoria")
                 @*Html.DisplayNameFor(model => model.Nome)*@
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Nome)
             </dd>
-    
+
             <dt>
                 @Html.DisplayName("Descrição")
                 @*Html.DisplayNameFor(model => model.Descricao)*@
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Descricao)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Imagem)
             </dt>
-    
+
             <dd>
                 @*Html.DisplayFor(model => model.Imagem)*@
                 <a href="~/imagens/@Model.Imagem" target="_blank">
-                    <img src="~/imagens/@Model.Imagem" width="50" height="50"/>
+                    <img src="~/imagens/@Model.Imagem" width="100" />
                 </a>
             </dd>
-    
+
         </dl>
     </div>
     <p>
