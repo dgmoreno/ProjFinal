@@ -30,9 +30,9 @@ namespace _4fitClub.Migrations
                 Imagem="Musculacao.png"},
                 new Categorias {ID=3, Nome="Flexibilidade", Descricao="Exercícios que ajudam a melhorar a flexibilidade",
                 Imagem="Flexibilidade.png"},
-                new Categorias {ID=4, Nome="Equilíbrio", Descricao="Exercícios para melhorar o equilibrio e a agilidade",
+                new Categorias {ID=4, Nome="Equilíbrio", Descricao="Exercícios para melhorar o equílibrio e a agilidade",
                 Imagem="Equilibrio.png"},
-                new Categorias {ID=5, Nome="Calístenia", Descricao="Exercícios que utilizam um grande conjuto de músculos do corpo",
+                new Categorias {ID=5, Nome="Calístenia/Calisthenics", Descricao="Exercícios que utilizam um grande conjuto de músculos do corpo",
                 Imagem="Calistenia.png"}
             };
             categorias.ForEach(cc => context.Categorias.AddOrUpdate(c => c.Nome, cc));
@@ -41,21 +41,21 @@ namespace _4fitClub.Migrations
             //********************************************************************************************
             // adiciona Exercicios
             var exercicios = new List<Exercicios> {
-                new Exercicios {ID=1, Nome="Flexão", Objetivo="Trabalhar a zona peitoral e triceps",
+                new Exercicios {ID=1, Nome="Flexão", Objetivo="Trabalhar a zona peitoral e tríceps",
                 Passos="1.Coloque o corpo numa posição de prancha, alinhado e com braços e pernas estendidos. " +
                        "2.Flita apenas os braços, até tocar com o peito e a cintura no chão." +
                        "3.Estenda de novo apenas os braços, até voltar à posição inicial.",
                 CategoriaFK=2},
                  new Exercicios {ID=2, Nome="Shadow Box", Objetivo="Resistência",
-                Passos="1.Faça movimentos de boxe no ar, pelo menos durante 30 segundos, e faça várias séries",
+                Passos="1.Faça movimentos de boxe no ar, pelo menos durante 30 segundos, e faça várias séries/repetições",
                 CategoriaFK=1},
-                new Exercicios {ID=3, Nome="Agachamento", Objetivo="Foco nos musculos superiores das pernas",
+                new Exercicios {ID=3, Nome="Agachamento", Objetivo="Foco nos músculos superiores das pernas",
                 Passos="1.Afaste os pés à largura dos ombros, apoiando totalmente no chão. " +
                        "2.Fletir os joelhos e baixar o corpo até ultrapassar o nível dos joelhos, mantendo sempre as costas direitas." +
                        "3.Estique as pernas para posição inicial.",
                 CategoriaFK=2},
                 new Exercicios {ID=4, Nome="Saltar à Corda ", Objetivo="Resistência e controlo da respiração",
-                Passos="1.Salte à Corda, e mantenha o ritmo durante 40 segundos",
+                Passos="1.Salte à Corda, e mantenha o rítmo durante 40 segundos",
                 CategoriaFK=1},
                 new Exercicios {ID=5, Nome="Cobra Stretch", Objetivo="Treinar Flexibilidade e alongar",
                 Passos="1.Coloque o corpo virado de barriga para baixo, com as palmas das mãos no chão." +
@@ -63,9 +63,9 @@ namespace _4fitClub.Migrations
                        "3.Baixe o tronco de forma lenta, até regressar à posição inicial. " +
                        "4.Repitas os passos entre 30 segundos a 1 minuto",
                 CategoriaFK=3},
-                new Exercicios {ID=6, Nome="Elevação", Objetivo="Exercicio de Calistenia, com foco no conjuto de músculos superiores",
+                new Exercicios {ID=6, Nome="Elevação", Objetivo="Exercício de Calístenia, com foco no conjuto de músculos superiores",
                 Passos="1.Pendurar numa barra com braços estendido."+
-                       "2.Elevar o corpo, com a força dos braços, até o queixo passar a barra",
+                       "2.Elevar o corpo, com a força dos braços, até o queixo passar a barra, ou até até tocar com o peito na barra",
                 CategoriaFK=5}
             };
             exercicios.ForEach(ee => context.Exercicios.AddOrUpdate(e => e.Nome, ee));

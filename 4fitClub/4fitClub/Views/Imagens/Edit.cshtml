@@ -13,7 +13,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     
     
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Edit","Imagens", FormMethod.Post, new { enctype = "multipart/form-data"} ))
     {
         @Html.AntiForgeryToken()
         
@@ -22,12 +22,18 @@
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.Nome)
     
             <div class="form-group">
                 @Html.Label("Imagem", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @*Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })*@
-                    <input type="file" name="uploadFotografia"
+                    <a href="~/multimedia/@Model.Nome" target="_blank">
+                        <img src="~/multimedia/@Model.Nome" height="150"/>
+
+                    </a>
+                    
+                    <input type="file" name="uploadImagem"
                            style="color:blue;" accept=".jpg" />
                     @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
                 </div>

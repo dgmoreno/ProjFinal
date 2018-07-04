@@ -30,12 +30,12 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Exercicios exercicios = db.Exercicios.Find(id);
             if (exercicios == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(exercicios);
         }
@@ -73,12 +73,12 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Exercicios exercicios = db.Exercicios.Find(id);
             if (exercicios == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             ViewBag.CategoriaFK = new SelectList(db.Categorias, "ID", "Nome", exercicios.CategoriaFK);
             return View(exercicios);
@@ -107,12 +107,12 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Exercicios exercicios = db.Exercicios.Find(id);
             if (exercicios == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(exercicios);
         }

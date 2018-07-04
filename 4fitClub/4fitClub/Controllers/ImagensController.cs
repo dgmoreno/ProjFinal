@@ -30,12 +30,12 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index/Index");
             }
             Imagens imagens = db.Imagens.Find(id);
             if (imagens == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index/Index");
             }
             return View(imagens);
         }
@@ -116,12 +116,12 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index/Index");
             }
             Imagens imagens = db.Imagens.Find(id);
             if (imagens == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index/Index");
             }
             ViewBag.ExercicioFK = new SelectList(db.Exercicios, "ID", "Nome", imagens.ExercicioFK);
             return View(imagens);
@@ -132,15 +132,15 @@ namespace _4fitClub.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nome,Ordem,Tipo,ExercicioFK")] Imagens imagens, HttpPostedFileBase uploadFotografia)
+        public ActionResult Edit([Bind(Include = "ID,Nome,Ordem,Tipo,ExercicioFK")] Imagens imagens, HttpPostedFileBase uploadImagem)
         {
             string nomeImagem = "Img_" + imagens.ID + ".jpg";
 
             string path = "";
 
-            if (uploadFotografia != null)
+            if (uploadImagem!=null)
             {
-                if (uploadFotografia.FileName.EndsWith("jpg") || uploadFotografia.FileName.EndsWith("png"))
+                if (uploadImagem.FileName.EndsWith("jpg") || uploadImagem.FileName.EndsWith("png"))
                 {
                     path = Path.Combine(Server.MapPath("~/multimedia/"), nomeImagem);
                 }
@@ -154,15 +154,15 @@ namespace _4fitClub.Controllers
             {
                 db.Entry(imagens).State = EntityState.Modified;
                 db.SaveChanges();
+                ViewBag.ExercicioFK = new SelectList(db.Exercicios, "ID", "Nome", imagens.ExercicioFK);
 
-                if(uploadFotografia != null)
+                if (uploadImagem != null)
                 {
-                    uploadFotografia.SaveAs(path);
+                    uploadImagem.SaveAs(path);
 
                 }
                 return RedirectToAction("Index/Index");
             }
-            ViewBag.ExercicioFK = new SelectList(db.Exercicios, "ID", "Nome", imagens.ExercicioFK);
             return View(imagens);
         }
 
@@ -171,12 +171,12 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index/Index");
             }
             Imagens imagens = db.Imagens.Find(id);
             if (imagens == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index/Index");
             }
             return View(imagens);
         }
