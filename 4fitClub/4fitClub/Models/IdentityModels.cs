@@ -53,31 +53,9 @@ namespace _4fitClub.Models
 
         public virtual DbSet<Imagens> Imagens { get; set; } //cria tabela Imagens
 
+        public virtual DbSet<Cliente> Cliente { get; set; } //cria tabela Clientes
 
-/*
-        //Id da categoria para utilizar no nome das imagens das categorias
-        public int GetIDCategoria()
-        {
-            // Um objeto que derive da classe "DbContext" (como o MultasDb)
-            // permite que seja executado SQL "raw", como no exemplo abaixo.
-            return this.Database
-                // <int> define o tipo de dados. Pode ser uma classe, os valores dos campos
-                // do SELECT serão copiados para o objeto.
-                .SqlQuery<int>("Select Next Value For [dbo].[SeqIdCategoria]")
-                // Single() é um operador do Linq. 
-                // Uso este porque só me interessa a primeira (e única) linha.
-                // Usaria ToList() se existissem várias, e First()/Last() se só quisesse
-                // a primera/última linha de muitas.
-                .Single();
-        }
 
-        public int GetIDMultimedia()
-        {
-            return this.Database
-                .SqlQuery<int>("Select Next Value For [dbo].[SeqIdImagem]")
-                .Single();
-        }
-        */
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -70,15 +70,28 @@ namespace _4fitClub.Migrations
             };
             exercicios.ForEach(ee => context.Exercicios.AddOrUpdate(e => e.Nome, ee));
             context.SaveChanges();
+ 
+            //**********************************************************************************************
+            //adicona Clientes 
 
+            var cliente = new List<Cliente>
+            {
+                new Cliente {ID=1, Nome="David", NIF="123456789", UserName="david@mail.pt"}
+            };
+            cliente.ForEach(cc => context.Cliente.AddOrUpdate(c => c.Nome, cc));
+            context.SaveChanges();
 
             //****************************************************************************************
             // adiciona Planos
             var planos = new List<Planos> {
-                new Planos {ID=1, Nome="Projeto Verão", Descricao="É desta que fico Fit", UserName="david@mail.pt", ListaDeExercicios=new List<Exercicios>{ exercicios[0], exercicios[2], exercicios[3], exercicios[4] } }
+                new Planos {ID=1, Nome="Projeto Verão",
+                            Descricao ="É desta que fico Fit",
+                            ClienteFK =1,
+                    ListaDeExercicios =new List<Exercicios>{ exercicios[0], exercicios[2], exercicios[3], exercicios[4] } }
             };
             planos.ForEach(pp => context.Planos.AddOrUpdate(p => p.Nome, pp));
             context.SaveChanges();
+
 
             //**********************************************************************************************
             //adicona Imagens - alterar para multimédia (o nome da classe)

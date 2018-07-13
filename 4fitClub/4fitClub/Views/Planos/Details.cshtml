@@ -14,22 +14,36 @@
         <h4>Planos</h4>
         <hr />
         <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Nome)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Nome)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Descricao)
+            </dd>
         </dl>
+        <div class="form-group">
+            @Html.DisplayName("Exercícios do meu plano:")
+            <ul>
+                @foreach (var item in Model.ListaDeExercicios.OrderBy(e => e.Nome))
+                {
+                    <li>@Html.DisplayFor(model => item.Nome)</li>
+                }
+            </ul>
+       
+
+
+        </div>
+
+
     </div>
     <p>
         @Html.ActionLink("Alterar Plano", "Edit", new { id = Model.ID }) |

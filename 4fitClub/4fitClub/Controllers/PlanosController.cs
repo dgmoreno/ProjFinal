@@ -20,8 +20,8 @@ namespace _4fitClub.Controllers
         {
             ///retorna os planos do user que efetuou login
             var planos = db.Planos
-                            .Where(p => p.UserName.Equals(User.Identity.Name))
-                            .Include(p => p.ListaDeExercicios);
+                            .Where(p => p.Cliente.UserName.Equals(User.Identity.Name))
+                            .Include(p => p.Cliente);
             
                
                 
@@ -41,8 +41,9 @@ namespace _4fitClub.Controllers
                 return RedirectToAction("Index");
             }
             /// ideia seria colocar os exercícios relacionados com o plano
+            ///planos.ListaDeExercicios.SelectMany();
 
-
+            //ViewBag.Exercicios = new SelectList(db.Exercicios, "ID", "exercicio", planos.ListaDeExercicios);
 
             return View(planos);
         }
@@ -50,6 +51,7 @@ namespace _4fitClub.Controllers
         // GET: Planos/Create
         public ActionResult Create()
         {
+            ViewBag.ListaExercicios = db.Exercicios.OrderBy(e => e.Nome).ToList();
             return View();
         }
 
@@ -58,13 +60,36 @@ namespace _4fitClub.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nome,Descricao")] Planos planos)
+        public ActionResult Create([Bind(Include = "ID,Nome,Descricao")] Planos planos, string[] opcoesEscolhidas)
         {
-            planos.UserName = User.Identity.Name;
+            //falta relaciona tablea de login para preencher os dados do cliente
+
+
+            //retornar o id do cliente autenticado
+            //var cliente = db.Cliente.Find(planos.ClienteFK).ID;
+            var cliente = db.Cliente.Where(p => p.UserName.Equals(User.Identity.Name)).Single().ID;
+
+            planos.ClienteFK = cliente;
+
+            var exercicios = db.Exercicios.ToList();
+
+            foreach (var ee in exercicios)
+            {
+                if (opcoesEscolhidas.Contains(ee.ID.ToString()))
+                {
+                    if (!planos.ListaDeExercicios.Contains(ee))
+                    {
+                    planos.ListaDeExercicios.Add(ee);
+                    }
+                }
+                else
+                {
+                    planos.ListaDeExercicios.Remove(ee);
+                }
+            }
 
             if (ModelState.IsValid)
             {
-                
                 db.Planos.Add(planos);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -85,6 +110,9 @@ namespace _4fitClub.Controllers
             {
                 return RedirectToAction("Index");
             }
+
+            // gerar a lista de objetos de exercicios que podem ser associados aos planos
+            ViewBag.ListaExercicios = db.Exercicios.OrderBy(e => e.Nome).ToList();
             return View(planos);
         }
 
@@ -93,16 +121,78 @@ namespace _4fitClub.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nome,Descricao")] Planos planos)
+        public ActionResult Edit([Bind(Include = "ID,Nome,Descricao")] Planos planos, string[] opcoesEscolhidas)
         {
-            planos.UserName = User.Identity.Name;
+            // ler da BD o objeto que se pretende editar
+            var pp = db.Planos.Include(e => e.ListaDeExercicios).Where(e => e.ID == planos.ID).SingleOrDefault();
 
             if (ModelState.IsValid)
             {
-                db.Entry(planos).State = EntityState.Modified;
+                pp.Nome = planos.Nome;
+                pp.Descricao = planos.Descricao;
+            }
+            else
+            {
+                // gerar a lista de objetos de exercicios que podem ser associados aos planos
+                ViewBag.ListaExercicios = db.Exercicios.OrderBy(e => e.Nome).ToList();
+                // devolver o controlo à View
+                return View(planos);
+            }
+
+            // tentar fazer o Update
+            if (TryUpdateModel(pp, "", new string[] { nameof(pp.Nome), nameof(pp.Descricao), nameof(pp.ListaDeExercicios) }))
+            {
+                //obter lista de exercicios
+                var exercicios = db.Exercicios.ToList();
+
+                if (opcoesEscolhidas != null)
+                {
+                    // se existirem opções escolhidas, vamos associá-las
+                    foreach (var ee in exercicios)
+                    {
+                        if (opcoesEscolhidas.Contains(ee.ID.ToString()))
+                        {
+                            // se uma opção escolhida ainda não está associada, cria-se a associação
+                            if (!pp.ListaDeExercicios.Contains(ee))
+                            {
+                                pp.ListaDeExercicios.Add(ee);
+                            }
+                        }
+                        else
+                        {
+                            // caso exista associação para uma opção que não foi escolhida, 
+                            // remove-se essa associação
+                            pp.ListaDeExercicios.Remove(ee);
+                        }
+                    }
+                }
+                else
+                {
+                    // não existem opções escolhidas!
+                    // vamos eliminar todas as associações
+                    foreach (var ee in exercicios)
+                    {
+                        if (pp.ListaDeExercicios.Contains(ee))
+                        {
+                            pp.ListaDeExercicios.Remove(ee);
+                        }
+                    }
+                }
+                //guardar alterações
                 db.SaveChanges();
+
+                //devolver controlo à View
                 return RedirectToAction("Index");
             }
+
+            // se cheguei aqui, é pq alguma coisa correu mal
+            ModelState.AddModelError("", "Alguma coisa correu mal...");
+
+            // gerar a lista de objetos de exercicios que podem ser associados aos planos
+            ViewBag.ListaExercicios = db.Exercicios.OrderBy(e => e.Nome).ToList();
+
+
+            // visualizar View...
             return View(planos);
         }
 
