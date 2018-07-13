@@ -15,6 +15,7 @@ namespace _4fitClub.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public ManageController()
         {
@@ -62,10 +63,15 @@ namespace _4fitClub.Controllers
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
+            
+           
+
 
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
+                Nome = db.Cliente.Where(p => p.UserName.Equals(User.Identity.Name)).Single().Nome,
+                ClienteID = db.Cliente.Where(p => p.UserName.Equals(User.Identity.Name)).Single().ID,
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),

@@ -217,6 +217,15 @@ namespace _4fitClub.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Planos planos = db.Planos.Find(id);
+            var pp = db.Planos.Include(e => e.ListaDeExercicios).Where(e => e.ID == planos.ID).SingleOrDefault();
+            var exercicios = db.Exercicios.ToList();
+            foreach (var ee in exercicios)
+            {
+                if (pp.ListaDeExercicios.Contains(ee))
+                {
+                    pp.ListaDeExercicios.Remove(ee);
+                }
+            }
             db.Planos.Remove(planos);
             db.SaveChanges();
             return RedirectToAction("Index");

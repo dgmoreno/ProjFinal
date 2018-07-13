@@ -17,6 +17,7 @@ namespace _4fitClub.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -138,7 +139,8 @@ namespace _4fitClub.Controllers
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
-        {
+        {   
+
             return View();
         }
 
@@ -152,6 +154,16 @@ namespace _4fitClub.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+                var cliente = new Cliente();
+
+                cliente.Nome = model.Nome;
+
+                cliente.UserName = user.UserName;
+
+                db.Cliente.Add(cliente);
+
+                db.SaveChanges();
                 var result = await UserManager.CreateAsync(user, model.Password);
                 var role = UserManager.AddToRole(user.Id, "Utilizador");
                 if (result.Succeeded)
@@ -169,7 +181,7 @@ namespace _4fitClub.Controllers
                 }
                 AddErrors(result);
             }
-
+            
             // If we got this far, something failed, redisplay form
             return View(model);
         }

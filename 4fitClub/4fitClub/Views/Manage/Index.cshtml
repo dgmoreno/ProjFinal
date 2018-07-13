@@ -10,6 +10,11 @@
     <h4></h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>Nome:</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+            @Html.ActionLink("Alterar",  "Edit", "Clientes", new { id = Model.ClienteID}, null)
+        </dd>
         <dt>Password:</dt>
         <dd>
             [
