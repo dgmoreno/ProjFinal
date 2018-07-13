@@ -217,7 +217,9 @@ namespace _4fitClub.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Planos planos = db.Planos.Find(id);
+            // ler da BD o objeto que se pretende eliminar
             var pp = db.Planos.Include(e => e.ListaDeExercicios).Where(e => e.ID == planos.ID).SingleOrDefault();
+            //obter lista de exercicios
             var exercicios = db.Exercicios.ToList();
             foreach (var ee in exercicios)
             {

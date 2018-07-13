@@ -10,9 +10,10 @@
     <title>Index</title>
 </head>
 <body>
-    <h3>
+    <h3>Meus Planos de Treino</h3>
+    <p>
         @Html.ActionLink("Criar Novo Plano de Treino", "Create")
-    </h3>
+    </p>
     <table class="table">
         <tr>
             <th>
@@ -23,23 +24,24 @@
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.ActionLink("Editar Plano de Treino", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Detalhes do Plano de Treino", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Eliminar Plano de Treino", "Delete", new { id=item.ID })
-            </td>
-        </tr>
-    }
-    
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar Plano de Treino", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Detalhes do Plano de Treino", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Eliminar Plano de Treino", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+
     </table>
 </body>
 </html>

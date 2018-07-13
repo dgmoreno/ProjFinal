@@ -30,13 +30,14 @@
                     {
                         if (User.IsInRole("Utilizador"))
                         {
-                            <li>@Html.ActionLink("Planos", "Index", "Planos")</li>
+                            <li>@Html.ActionLink("Os Meus Planos", "Index", "Planos")</li>
                         }
 
 
                         if (User.IsInRole("Manager"))
                         {
                             <li>@Html.ActionLink("Imagens", "Index", "Imagens/Index")</li>
+                            <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>
                         }
                     }
                 </ul>

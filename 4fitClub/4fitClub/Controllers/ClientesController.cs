@@ -10,17 +10,20 @@ using _4fitClub.Models;
 
 namespace _4fitClub.Controllers
 {
+    [Authorize(Roles = "Manager,Utilizador")]
     public class ClientesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Clientes
+        [Authorize(Roles = "Manager")]
         public ActionResult Index()
         {
             return View(db.Cliente.ToList());
         }
 
         // GET: Clientes/Details/5
+        [Authorize(Roles = "Manager")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +39,7 @@ namespace _4fitClub.Controllers
         }
 
         // GET: Clientes/Create
+        [Authorize(Roles = "Manager")]
         public ActionResult Create()
         {
             return View();
@@ -59,18 +63,23 @@ namespace _4fitClub.Controllers
         }
 
         // GET: Clientes/Edit/5
+        [Authorize(Roles = "Manager,Utilizador")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Manage");
             }
             Cliente cliente = db.Cliente.Find(id);
             if (cliente == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Manage");
             }
-            return View(cliente);
+            if (User.IsInRole("Manager") || User.Identity.Name.Equals(cliente.UserName))
+            {
+                return View(cliente);
+            }
+            return RedirectToAction("Index", "Manage");
         }
 
         // POST: Clientes/Edit/5
@@ -84,12 +93,13 @@ namespace _4fitClub.Controllers
             {
                 db.Entry(cliente).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Manage");
             }
             return View(cliente);
         }
 
         // GET: Clientes/Delete/5
+        [Authorize(Roles = "Manager")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
