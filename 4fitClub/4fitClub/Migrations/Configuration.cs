@@ -86,6 +86,7 @@ namespace _4fitClub.Migrations
             var planos = new List<Planos> {
                 new Planos {ID=1, Nome="Projeto Verão",
                             Descricao ="É desta que fico Fit",
+                            DataCriacao = new DateTime(2018,7,5,14,55,30),
                             ClienteFK =1,
                     ListaDeExercicios =new List<Exercicios>{ exercicios[0], exercicios[2], exercicios[3], exercicios[4] } }
             };

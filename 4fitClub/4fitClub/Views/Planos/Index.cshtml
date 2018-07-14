@@ -22,24 +22,30 @@
             <th>
                 @Html.DisplayNameFor(model => model.Descricao)
             </th>
+            <th>
+                @Html.DisplayName("Data de Criação do Plano")
+            </th>
             <th></th>
         </tr>
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descricao)
-                </td>
-                <td>
-                    @Html.ActionLink("Editar Plano de Treino", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Detalhes do Plano de Treino", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Eliminar Plano de Treino", "Delete", new { id = item.ID })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataCriacao)
+            </td>
+            <td>
+                @Html.ActionLink("Editar Plano de Treino", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Detalhes do Plano de Treino", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Eliminar Plano de Treino", "Delete", new { id = item.ID })
+            </td>
+        </tr>
         }
 
     </table>

@@ -70,7 +70,7 @@ namespace _4fitClub.Controllers
             var cliente = db.Cliente.Where(p => p.UserName.Equals(User.Identity.Name)).Single().ID;
 
             planos.ClienteFK = cliente;
-
+            planos.DataCriacao = DateTime.Now;
             var exercicios = db.Exercicios.ToList();
 
             foreach (var ee in exercicios)

@@ -22,6 +22,8 @@ namespace _4fitClub.Models
 
         public string Descricao { get; set; }
 
+        public DateTime DataCriacao { get; set; }
+
         //incluir data de inicio de criação
         //public DateTime DataCriacao { get; set; }
         //*************************************************************

@@ -18,19 +18,27 @@
             <dt>
                 @Html.DisplayNameFor(model => model.Nome)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Nome)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Descricao)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Descricao)
             </dd>
-    
+
+            <dt>
+                @Html.DisplayName("Data de Criação do Plano")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DataCriacao)
+            </dd>
+
         </dl>
     
         @using (Html.BeginForm()) {
