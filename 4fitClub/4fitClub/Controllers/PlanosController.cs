@@ -25,7 +25,7 @@ namespace _4fitClub.Controllers
             
                
                 
-            return View(planos.ToList());
+            return View(planos.ToList().OrderBy(p => p.Nome));
         }
 
         // GET: Planos/Details/5

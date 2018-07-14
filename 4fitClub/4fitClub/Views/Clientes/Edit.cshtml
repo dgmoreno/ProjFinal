@@ -15,7 +15,7 @@
         @Html.AntiForgeryToken()
         
         <div class="form-horizontal">
-            <h4>Cliente</h4>
+            <h3>Cliente</h3>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.ID)
@@ -40,14 +40,22 @@
     
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
+                    <input type="submit" value="Save" class="btn btn-success" />
                 </div>
             </div>
         </div>
     }
     
-    <div>
-        @Html.ActionLink("Voltar ao Perfil", "Index", "Manage", null, null)
-    </div>
+        <div>
+            @if (User.IsInRole("Utilizador"))
+            {
+                @Html.ActionLink("Voltar ao Perfil", "Index", "Manage", null, null)
+            }
+            @if (User.IsInRole("Manager")){
+                @Html.ActionLink("Voltar ao Perfil", "Index")
+            }
+
+
+        </div>
 </body>
 </html>

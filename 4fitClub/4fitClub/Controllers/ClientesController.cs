@@ -28,12 +28,12 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Cliente cliente = db.Cliente.Find(id);
             if (cliente == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(cliente);
         }
@@ -68,18 +68,30 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction("Index", "Manage");
+                if (User.IsInRole("Utilizador"))
+                {
+                    return RedirectToAction("Index", "Manage");
+                }
+                return RedirectToAction("Index");
             }
             Cliente cliente = db.Cliente.Find(id);
             if (cliente == null)
             {
-                return RedirectToAction("Index", "Manage");
+                if (User.IsInRole("Utilizador"))
+                {
+                    return RedirectToAction("Index", "Manage");
+                }
+                return RedirectToAction("Index");
             }
             if (User.IsInRole("Manager") || User.Identity.Name.Equals(cliente.UserName))
             {
                 return View(cliente);
             }
-            return RedirectToAction("Index", "Manage");
+            if (User.IsInRole("Utilizador"))
+            {
+                return RedirectToAction("Index", "Manage");
+            }
+            return RedirectToAction("Index");
         }
 
         // POST: Clientes/Edit/5
@@ -93,7 +105,11 @@ namespace _4fitClub.Controllers
             {
                 db.Entry(cliente).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", "Manage");
+                if (User.IsInRole("Utilizador"))
+                {
+                    return RedirectToAction("Index", "Manage");
+                }
+                return RedirectToAction("Index");
             }
             return View(cliente);
         }
@@ -104,12 +120,12 @@ namespace _4fitClub.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Cliente cliente = db.Cliente.Find(id);
             if (cliente == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(cliente);
         }
@@ -120,9 +136,19 @@ namespace _4fitClub.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Cliente cliente = db.Cliente.Find(id);
-            db.Cliente.Remove(cliente);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.Cliente.Remove(cliente);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", string.Format("Não é possível apagar o Cliente {0}, existem planos de treino associados ao Cliente",
+                                            cliente.Nome)
+                );
+            }
+            return View(cliente);
         }
 
         protected override void Dispose(bool disposing)

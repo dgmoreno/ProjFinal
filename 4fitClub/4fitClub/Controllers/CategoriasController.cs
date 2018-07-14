@@ -21,7 +21,8 @@ namespace _4fitClub.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(db.Categorias.ToList());
+            var listaDeCategorias = db.Categorias.ToList().OrderBy(c => c.Nome);
+            return View(listaDeCategorias);
         }
 
         // GET: Categorias/Details/5

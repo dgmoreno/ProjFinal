@@ -20,8 +20,8 @@ namespace _4fitClub.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            var exercicios = db.Exercicios.Include(e => e.Categoria);
-            return View(exercicios.ToList());
+            var exercicios = db.Exercicios.Include(e => e.Categoria).ToList().OrderBy(e => e.Nome);
+            return View(exercicios);
         }
 
         // GET: Exercicios/Details/5
@@ -124,9 +124,20 @@ namespace _4fitClub.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Exercicios exercicios = db.Exercicios.Find(id);
-            db.Exercicios.Remove(exercicios);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.Exercicios.Remove(exercicios);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+
+                ModelState.AddModelError("", string.Format("Não é possível apagar o exercício {0}, existem elementos associados ao exercício",
+                                          exercicios.Nome)
+              );
+            }
+            return View(exercicios);
         }
 
         protected override void Dispose(bool disposing)

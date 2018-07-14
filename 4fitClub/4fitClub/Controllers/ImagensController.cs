@@ -187,9 +187,19 @@ namespace _4fitClub.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Imagens imagens = db.Imagens.Find(id);
-            db.Imagens.Remove(imagens);
-            db.SaveChanges();
-            return RedirectToAction("Index/Index");
+            try
+            {
+                db.Imagens.Remove(imagens);
+                db.SaveChanges();
+                return RedirectToAction("Index/Index");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", string.Format("Não é possível apagar a Imagem {0}, existem elementos associados à imagem",
+                                           imagens.Nome)
+               );
+            }
+            return View(imagens);
         }
 
         protected override void Dispose(bool disposing)

@@ -9,8 +9,9 @@
     <title>Index</title>
 </head>
 <body>
+    <h3>Clientes da Aplicação</h3>
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Adicionar Cliente", "Create")
     </p>
     <table class="table">
         <tr>
@@ -25,26 +26,27 @@
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NIF)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-            </td>
-        </tr>
-    }
-    
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NIF)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar Perfil de Cliente", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Detalhes do cliente", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Eliminar Cliente", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+
     </table>
 </body>
 </html>

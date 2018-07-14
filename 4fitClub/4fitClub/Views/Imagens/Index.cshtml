@@ -10,9 +10,10 @@
     <title>Index</title>
 </head>
 <body>
-    <h3>
+    <h3>Multimédia</h3>
+    <p>
         @Html.ActionLink("Adicionar Multimédia", "Create")
-    </h3>
+    </p>
     <table class="table">
         <tr>
             <th>
@@ -30,32 +31,33 @@
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Exercicio.Nome)
-            </td>
-            <td>
-                @*Html.DisplayFor(modelItem => item.Nome)*@
-                <a href="~/multimedia/@item.Nome" target="_blank">
-                    <img src="~/multimedia/@item.Nome" width="190" />
-                </a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ordem)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tipo)
-            </td>
-            <td>
-                @Html.ActionLink("Editar detalhes Multimédia", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Detalhes Multimédia", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Eliminar Multimédia", "Delete", new { id=item.ID })
-            </td>
-        </tr>
-    }
-    
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Exercicio.Nome)
+                </td>
+                <td>
+                    @*Html.DisplayFor(modelItem => item.Nome)*@
+                    <a href="~/multimedia/@item.Nome" target="_blank">
+                        <img src="~/multimedia/@item.Nome" width="190" />
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ordem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tipo)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar detalhes Multimédia", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Detalhes Multimédia", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Eliminar Multimédia", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+
     </table>
 </body>
 </html>
