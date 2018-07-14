@@ -17,7 +17,7 @@ namespace _4fitClub.Models
 
         public string Nome { get; set; }
     
-        public string NIF { get; set; }
+        public string Imagem { get; set; }
 
         public string UserName { get; set; }
 

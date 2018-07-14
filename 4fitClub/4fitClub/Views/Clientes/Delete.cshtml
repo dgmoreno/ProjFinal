@@ -24,11 +24,13 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.NIF)
+                @Html.DisplayNameFor(model => model.Imagem)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.NIF)
+                <a href="~/UserImages/@Model.Imagem" target="_blank">
+                    <img src="~/UserImages/@Model.Imagem" width="200" />
+                </a>
             </dd>
 
             <dt>

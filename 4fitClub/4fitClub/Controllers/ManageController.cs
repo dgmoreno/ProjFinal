@@ -72,6 +72,7 @@ namespace _4fitClub.Controllers
             {
                 Nome = db.Cliente.Where(p => p.UserName.Equals(User.Identity.Name)).Single().Nome,
                 ClienteID = db.Cliente.Where(p => p.UserName.Equals(User.Identity.Name)).Single().ID,
+                Imagem = db.Cliente.Where(p => p.UserName.Equals(User.Identity.Name)).Single().Imagem,
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),

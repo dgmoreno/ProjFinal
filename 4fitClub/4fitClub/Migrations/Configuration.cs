@@ -76,7 +76,7 @@ namespace _4fitClub.Migrations
 
             var cliente = new List<Cliente>
             {
-                new Cliente {ID=1, Nome="David", NIF="123456789", UserName="david@mail.pt"}
+                new Cliente {ID=1, Nome="David", Imagem="katsu.jpg", UserName="david@mail.pt"}
             };
             cliente.ForEach(cc => context.Cliente.AddOrUpdate(c => c.Nome, cc));
             context.SaveChanges();

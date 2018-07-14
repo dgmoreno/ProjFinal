@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using _4fitClub.Models;
+using System.IO;
 
 namespace _4fitClub.Controllers
 {
@@ -149,13 +150,44 @@ namespace _4fitClub.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase uploadImagem)
         {
+            var cliente = new Cliente();
+
+            int idNovoCliente = 0;
+            try
+            {
+                idNovoCliente = db.Cliente.Max(c => c.ID) + 1;
+            }
+            catch 
+            {
+                idNovoCliente = 1;
+            }
+
+            ///cria o nome da imagem
+            string nomeImagem = "Cliente" + idNovoCliente + ".jpg";
+            string path = "";
+
+            if (uploadImagem != null)
+            {
+                if (uploadImagem.FileName.EndsWith("jpg") || uploadImagem.FileName.EndsWith("png"))
+                {
+                    //caminho para guardar a imagem
+                    path = Path.Combine(Server.MapPath("~/UserImages/"), nomeImagem);
+                }
+                //novo nome da imagem
+                cliente.Imagem = nomeImagem;
+            }
+            else
+            {
+                ModelState.AddModelError("", "Não foi fornecida uma imagem");
+                return View(model);
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
-                var cliente = new Cliente();
 
                 cliente.Nome = model.Nome;
 
@@ -164,6 +196,7 @@ namespace _4fitClub.Controllers
                 db.Cliente.Add(cliente);
 
                 db.SaveChanges();
+                uploadImagem.SaveAs(path);
                 var result = await UserManager.CreateAsync(user, model.Password);
                 var role = UserManager.AddToRole(user.Id, "Utilizador");
                 if (result.Succeeded)

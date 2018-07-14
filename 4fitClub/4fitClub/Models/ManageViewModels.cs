@@ -13,6 +13,7 @@ namespace _4fitClub.Models
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
         public string Nome { get; set; }
+        public string Imagem { get; set; }
         public int ClienteID { get; set; }
     }
 

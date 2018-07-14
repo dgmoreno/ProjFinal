@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NIF)
+                @Html.DisplayNameFor(model => model.Imagem)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.UserName)
@@ -34,7 +34,9 @@
                     @Html.DisplayFor(modelItem => item.Nome)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NIF)
+                    <a href="~/UserImages/@item.Imagem" target="_blank">
+                        <img src="~/UserImages/@item.Imagem" width="100" />
+                    </a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.UserName)

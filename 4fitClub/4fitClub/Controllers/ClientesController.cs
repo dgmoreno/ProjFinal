@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -99,17 +100,43 @@ namespace _4fitClub.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nome,NIF,UserName")] Cliente cliente)
+        public ActionResult Edit([Bind(Include = "ID,Nome,Imagem,UserName")] Cliente cliente, HttpPostedFileBase uploadImagemEdit)
         {
+            string novaImagem = "User_" + cliente.ID + ".jpg";
+
+            string path = "";
+
+            if (uploadImagemEdit != null)
+            {
+                if (uploadImagemEdit.FileName.EndsWith("jpg") || uploadImagemEdit.FileName.EndsWith("png"))
+                {
+                    path = Path.Combine(Server.MapPath("~/UserImages"), novaImagem);
+
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Ficheiro não é uma imagem");
+                }
+                cliente.Imagem = novaImagem;
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(cliente).State = EntityState.Modified;
                 db.SaveChanges();
+                if (uploadImagemEdit != null)
+                {
+                    uploadImagemEdit.SaveAs(path);
+                }
                 if (User.IsInRole("Utilizador"))
                 {
                     return RedirectToAction("Index", "Manage");
                 }
-                return RedirectToAction("Index");
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+               
             }
             return View(cliente);
         }
