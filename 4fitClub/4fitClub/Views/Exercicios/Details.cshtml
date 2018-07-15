@@ -45,8 +45,13 @@
             <dd>
                 @Html.DisplayFor(model => model.Passos)
             </dd>
-
         </dl>
+        <div style="text-align:center">
+            @foreach (var item in Model.ListaDeImagens.OrderBy(i => i.Ordem))
+            {
+                <img src="~/multimedia/@item.Nome" width="200" />
+            }
+        </div>
     </div>
     <p>
         @if (User.IsInRole("Manager"))
@@ -55,7 +60,6 @@
                 @Html.ActionLink("Editar Exercício", "Edit", new { id = Model.ID }) |
             </text>
         }
-
         @Html.ActionLink("Voltar aos Exercícios", "Index")
     </p>
 </body>

@@ -39,16 +39,13 @@
             </dd>
         </dl>
         <div class="form-group">
-            @Html.DisplayName("Exercícios do meu plano:")
+            <b>@Html.DisplayName("Exercícios do meu plano:")</b>
             <ul>
                 @foreach (var item in Model.ListaDeExercicios.OrderBy(e => e.Nome))
                 {
-                    <li>@Html.DisplayFor(model => item.Nome)</li>
+                <li>@Html.ActionLink(item.Nome, "Details", "Exercicios", new { id = item.ID }, new { target="_blank"})</li>
                 }
             </ul>
-       
-
-
         </div>
 
 

@@ -36,6 +36,8 @@ namespace _4fitClub.Controllers
             {
                 return RedirectToAction("Index");
             }
+
+
             return View(cliente);
         }
 
@@ -51,7 +53,7 @@ namespace _4fitClub.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nome,NIF,UserName")] Cliente cliente)
+        public ActionResult Create([Bind(Include = "ID,Nome,Imagem,UserName")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {

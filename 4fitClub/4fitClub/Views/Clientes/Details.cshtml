@@ -16,30 +16,38 @@
             <dt>
                 @Html.DisplayNameFor(model => model.Nome)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Nome)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Imagem)
             </dt>
-    
+
             <dd>
                 <a href="~/UserImages/@Model.Imagem" target="_blank">
                     <img src="~/UserImages/@Model.Imagem" width="200" />
                 </a>
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.UserName)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.UserName)
             </dd>
-    
         </dl>
+        <div class="form-group">
+            <b>@Html.DisplayName("Os meus planos:")</b>
+            <ul>
+                @foreach (var item in Model.ListaDePlanos.OrderBy(p => p.Nome))
+                {
+                    <li>@Html.DisplayFor(model => item.Nome)</li>
+                }
+            </ul>
+        </div>
     </div>
     <p>
         @Html.ActionLink("Editar Cliente", "Edit", new { id = Model.ID }) |

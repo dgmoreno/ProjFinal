@@ -20,19 +20,6 @@
                 <img src="~/UserImages/@Model.Imagem" width="200" />
             </a>
         </dd>
-        <dt>Password:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Mudar Password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
-        </dd>
         @*<dt>External Logins:</dt>
             <dd>
                 @Model.Logins.Count [
@@ -94,5 +81,19 @@
                     }
             </dd>*@
     </dl>
-    [@Html.ActionLink("Alterar dados", "Edit", "Clientes", new { id = Model.ClienteID }, null)]
+    <div style="text-align:center">
+        [@Html.ActionLink("Alterar dados", "Edit", "Clientes", new { id = Model.ClienteID }, null)] |
+        [
+        @if (Model.HasPassword)
+        {
+            @Html.ActionLink("Mudar Password", "ChangePassword")
+        }
+        else
+        {
+            @Html.ActionLink("Create", "SetPassword")
+        }
+        ]
+    </div>
+
+
 </div>
