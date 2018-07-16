@@ -59,7 +59,7 @@ namespace _4fitClub.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            //Intru~ções que retiram a eliminação em cascata
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 

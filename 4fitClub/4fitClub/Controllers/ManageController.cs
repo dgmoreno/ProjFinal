@@ -66,7 +66,7 @@ namespace _4fitClub.Controllers
             
            
 
-
+            ///Este controller sendo o controller do perfil do cliente é preciso aprensentar o Nome do cliente e a sua imagem
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {

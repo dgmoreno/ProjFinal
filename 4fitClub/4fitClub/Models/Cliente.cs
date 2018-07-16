@@ -21,6 +21,7 @@ namespace _4fitClub.Models
 
         public string UserName { get; set; }
 
+        // Lista de Planos do cliente
         public virtual ICollection<Planos> ListaDePlanos { get; set; }
 
     }

@@ -147,11 +147,18 @@ namespace _4fitClub.Controllers
 
         //
         // POST: /Account/Register
+        /// <summary>
+        /// ViewModel do Registo do cliente, tem como parametros o modelo e a imagem do cliente para ser feita o upload
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="uploadImagem"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase uploadImagem)
         {
+            ///cria um novo cliente
             var cliente = new Cliente();
 
             int idNovoCliente = 0;
@@ -188,16 +195,18 @@ namespace _4fitClub.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
-
+                /// atribui o nome do model ao nome da classe cliente
                 cliente.Nome = model.Nome;
-
+                /// atribui o username do model ao username da classe cliente
                 cliente.UserName = user.UserName;
-
+                ///guarda os dados na tabela do clientes
                 db.Cliente.Add(cliente);
-
+                ///commit na base de dados
                 db.SaveChanges();
+                ///guarda a imagem no caminho 
                 uploadImagem.SaveAs(path);
                 var result = await UserManager.CreateAsync(user, model.Password);
+                ///atribui ao novo cliente a role de Utilizador
                 var role = UserManager.AddToRole(user.Id, "Utilizador");
                 if (result.Succeeded)
                 {

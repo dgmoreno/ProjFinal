@@ -14,7 +14,10 @@ namespace _4fitClub.Controllers
     public class PlanosController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        /// <summary>
+        /// Retorna os planos de um utilizador ordenados pela data de criação 
+        /// </summary>
+        /// <returns></returns>
         // GET: Planos
         public ActionResult Index()
         {
@@ -25,9 +28,14 @@ namespace _4fitClub.Controllers
             
                
                 
-            return View(planos.ToList().OrderBy(p => p.Nome));
+            return View(planos.ToList().OrderByDescending(p => p.DataCriacao));
         }
-
+        /// <summary>
+        /// Detalhes de um plano, e na view será possível visualizar os exercícios do plano,
+        /// com link para o exercício
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: Planos/Details/5
         public ActionResult Details(int? id)
         {
@@ -40,10 +48,6 @@ namespace _4fitClub.Controllers
             {
                 return RedirectToAction("Index");
             }
-            /// ideia seria colocar os exercícios relacionados com o plano
-            ///planos.ListaDeExercicios.SelectMany();
-
-            //ViewBag.Exercicios = new SelectList(db.Exercicios, "ID", "exercicio", planos.ListaDeExercicios);
 
             return View(planos);
         }
@@ -54,7 +58,12 @@ namespace _4fitClub.Controllers
             ViewBag.ListaExercicios = db.Exercicios.OrderBy(e => e.Nome).ToList();
             return View();
         }
-
+        /// <summary>
+        /// Cria um plano, em que podem ser incluídos os exercícios
+        /// </summary>
+        /// <param name="planos"></param>
+        /// <param name="opcoesEscolhidas"></param>
+        /// <returns></returns>
         // POST: Planos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -115,7 +124,12 @@ namespace _4fitClub.Controllers
             ViewBag.ListaExercicios = db.Exercicios.OrderBy(e => e.Nome).ToList();
             return View(planos);
         }
-
+        /// <summary>
+        /// Edição do plano, pode-se adiciona ou retirar exercícios
+        /// </summary>
+        /// <param name="planos"></param>
+        /// <param name="opcoesEscolhidas"></param>
+        /// <returns></returns>
         // POST: Planos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -210,7 +224,12 @@ namespace _4fitClub.Controllers
             }
             return View(planos);
         }
-
+        /// <summary>
+        /// O cliente pode apagar o plano, tirando a associação aos exercícios,
+        /// podendo remover com segurança o plano
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // POST: Planos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

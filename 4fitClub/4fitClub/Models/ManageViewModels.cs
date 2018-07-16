@@ -7,6 +7,11 @@ namespace _4fitClub.Models
 {
     public class IndexViewModel
     {
+        /// <summary>
+        /// View Model do perfil do utilizador
+        /// em que foi acrescentado o Nome a imagem e
+        /// o id do cliente para saber os planos que lhe pertencem
+        /// </summary>
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }

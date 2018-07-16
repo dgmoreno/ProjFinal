@@ -15,7 +15,10 @@ namespace _4fitClub.Controllers
     public class ClientesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        /// <summary>
+        /// Ação para visualização dos clientes na aplicação
+        /// </summary>
+        /// <returns></returns>
         // GET: Clientes
         [Authorize(Roles = "Manager")]
         public ActionResult Index()
@@ -47,7 +50,14 @@ namespace _4fitClub.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// Ação para criação de cliente, mas não átiva
+        /// Isto deve-se ao facto dos clientes criarem as sua própias contas 
+        /// e automáticamente é adicionado à base de dados por isso esta funcionalidade 
+        /// do lado do "Manager" não está átiva
+        /// </summary>
+        /// <param name="cliente"></param>
+        /// <returns></returns>
         // POST: Clientes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -96,7 +106,12 @@ namespace _4fitClub.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        /// <summary>
+        /// Ação para Edição que recebe a imagem do upload e o Cliente
+        /// </summary>
+        /// <param name="cliente"></param>
+        /// <param name="uploadImagemEdit"></param>
+        /// <returns></returns>
         // POST: Clientes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -158,13 +173,22 @@ namespace _4fitClub.Controllers
             }
             return View(cliente);
         }
-
+        /// <summary>
+        /// Tal como o create, para apagar o cliente seria uma decisão interna
+        /// Na minha opinião pode ser feita mas isto gera o problema de haver planos criados
+        /// que não têm nenhum cliente associado o impossibilita a eliminação desses planos
+        /// Por isso decidi não fazer a eliminação do cliente. Mas mais uma vez
+        /// na minha opinão deve ser possível a sua eliminação
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // POST: Clientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Cliente cliente = db.Cliente.Find(id);
+            
             try
             {
                 db.Cliente.Remove(cliente);

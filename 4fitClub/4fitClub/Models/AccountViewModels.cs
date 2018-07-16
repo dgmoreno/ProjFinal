@@ -64,6 +64,11 @@ namespace _4fitClub.Models
 
     public class RegisterViewModel
     {
+        /// <summary>
+        ///    View Model do registo do utilizador
+        ///    é pedido o email o nome e uma imagem 
+        ///    e a password
+        /// </summary>
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

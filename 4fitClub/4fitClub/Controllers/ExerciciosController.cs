@@ -15,7 +15,10 @@ namespace _4fitClub.Controllers
     {
 
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        /// <summary>
+        /// Visualização dos exercícios ordenados pelo nome
+        /// </summary>
+        /// <returns></returns>
         // GET: Exercicios
         [AllowAnonymous]
         public ActionResult Index()
@@ -47,7 +50,11 @@ namespace _4fitClub.Controllers
             ViewBag.CategoriaFK = new SelectList(db.Categorias, "ID", "Nome");
             return View();
         }
-
+        /// <summary>
+        /// Ação para criar um exercício
+        /// </summary>
+        /// <param name="exercicios"></param>
+        /// <returns></returns>
         // POST: Exercicios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -66,7 +73,7 @@ namespace _4fitClub.Controllers
             ViewBag.CategoriaFK = new SelectList(db.Categorias, "ID", "Nome", exercicios.CategoriaFK);
             return View(exercicios);
         }
-
+        
         // GET: Exercicios/Edit/5
         [Authorize(Roles = "Manager")]
         public ActionResult Edit(int? id)
@@ -83,7 +90,11 @@ namespace _4fitClub.Controllers
             ViewBag.CategoriaFK = new SelectList(db.Categorias, "ID", "Nome", exercicios.CategoriaFK);
             return View(exercicios);
         }
-
+        /// <summary>
+        /// Ação para edição do exercício
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // POST: Exercicios/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -116,7 +127,12 @@ namespace _4fitClub.Controllers
             }
             return View(exercicios);
         }
-
+        /// <summary>
+        /// Ação para eliminação do exercício
+        /// Não vai ser possível caso haja elementos associados no caso planos e imagens
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // POST: Exercicios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

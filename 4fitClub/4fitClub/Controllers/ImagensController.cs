@@ -15,16 +15,22 @@ namespace _4fitClub.Controllers
     public class ImagensController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        /// <summary>
+        /// Ação que entrega para a vista as imagens ordenadas por 
+        /// </summary>
+        /// <returns></returns>
         // GET: Imagens
         public ActionResult Index()
         {
-            //var imagens = db.Imagens.Include(i => i.Exercicio);
             //Ordena as imagens por Tipo de exercicio
             var listaDeImagens = db.Imagens.ToList().OrderBy(i => i.ExercicioFK);
             return View(listaDeImagens);
         }
-
+        /// <summary>
+        /// detalhes das imagens
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: Imagens/Details/5
         public ActionResult Details(int? id)
         {
@@ -46,7 +52,12 @@ namespace _4fitClub.Controllers
             ViewBag.ExercicioFK = new SelectList(db.Exercicios, "ID", "Nome");
             return View();
         }
-
+        /// <summary>
+        /// Adicionar uma nova imagem de um exercícios
+        /// </summary>
+        /// <param name="imagens"></param>
+        /// <param name="uploadFotografia"></param>
+        /// <returns></returns>
         // POST: Imagens/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -126,7 +137,12 @@ namespace _4fitClub.Controllers
             ViewBag.ExercicioFK = new SelectList(db.Exercicios, "ID", "Nome", imagens.ExercicioFK);
             return View(imagens);
         }
-
+        /// <summary>
+        /// Edição da imagens de um exercício
+        /// </summary>
+        /// <param name="imagens"></param>
+        /// <param name="uploadImagem"></param>
+        /// <returns></returns>
         // POST: Imagens/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -180,7 +196,11 @@ namespace _4fitClub.Controllers
             }
             return View(imagens);
         }
-
+        /// <summary>
+        /// Ação que irá apagar a imagem
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // POST: Imagens/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

@@ -16,7 +16,10 @@ namespace _4fitClub.Controllers
     public class CategoriasController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        /// <summary>
+        /// Index que retrona a lista de Categorias ordenadas pelo nome
+        /// </summary>
+        /// <returns></returns>
         // GET: Categorias
         [AllowAnonymous]
         public ActionResult Index()
@@ -24,7 +27,11 @@ namespace _4fitClub.Controllers
             var listaDeCategorias = db.Categorias.ToList().OrderBy(c => c.Nome);
             return View(listaDeCategorias);
         }
-
+        /// <summary>
+        /// Retorna os detalhes de uma categoria passando por parâmeto o id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: Categorias/Details/5
         [AllowAnonymous]
         public ActionResult Details(int? id)
@@ -38,12 +45,8 @@ namespace _4fitClub.Controllers
             {
                 return RedirectToAction("Index");
             }
-            //var a = db.Exercicios.Where(e => e.CategoriaFK.Equals(categorias)).Include(e => e.Categoria);
-
 
             return View(categorias);
-
-            
 
         }
 
@@ -53,7 +56,12 @@ namespace _4fitClub.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// Ação para a criação da categoria
+        /// </summary>
+        /// <param name="categoria"></param>
+        /// <param name="uploadImagem"></param>
+        /// <returns></returns>
         // POST: Categorias/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -139,7 +147,12 @@ namespace _4fitClub.Controllers
 
             return View(categorias);
         }
-
+        /// <summary>
+        /// Ação para editar a categoria
+        /// </summary>
+        /// <param name="categoria"></param>
+        /// <param name="uploadImagemEdit"></param>
+        /// <returns></returns>
         // POST: Categorias/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -197,7 +210,13 @@ namespace _4fitClub.Controllers
             }
             return View(categorias);
         }
-
+        /// <summary>
+        /// Ação para apagar a categoria,
+        /// Só é possível se a categoria não tiver exercícios associados
+        /// visto que a chave estrangeira do lado dos exercícios não suporta nulls
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // POST: Categorias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

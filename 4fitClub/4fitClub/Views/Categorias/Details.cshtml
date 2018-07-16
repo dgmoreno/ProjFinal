@@ -44,7 +44,15 @@
             </dd>
 
         </dl>
+        <div>
+            <b>Exercícios existentes na categoria:</b><br />
+            @foreach (var item in Model.ListaDeExercicios.OrderBy(i => i.Nome))
+            {
+                <p>@item.Nome</p>
+            }
+        </div>
     </div>
+    <hr />
     <p>
         @if (User.IsInRole("Manager"))
         {

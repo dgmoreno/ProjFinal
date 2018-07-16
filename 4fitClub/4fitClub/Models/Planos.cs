@@ -27,8 +27,7 @@ namespace _4fitClub.Models
         //incluir data de inicio de criação
         //public DateTime DataCriacao { get; set; }
         //*************************************************************
-        // nome do login (UserName) utilizado para identificar os Planos do utilizador
-        // na prática, é uma FK para a tabela dos utilizadores AspNetUsers
+        // chave estrangeira para o cliente que possui um conjunto de planos
         [ForeignKey("Cliente")]
         public int ClienteFK { get; set; }
         public virtual Cliente  Cliente { get; set; }
